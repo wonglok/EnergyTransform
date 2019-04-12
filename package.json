@@ -5,15 +5,23 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "github": "git add .; git commit -am \"github backup\"; git push -u origin master",
+    "deploy": "npm run github; npm run build; npm run cp; npm run netlify;",
+    "netlify": "netlify deploy --dir=\"./dist\" --prod",
+    "cp": "cp _redirects ./dist/_redirects"
   },
   "dependencies": {
+    "imports-loader": "^0.8.0",
+    "oimo": "^1.0.9",
+    "three": "^0.103.0",
     "core-js": "^2.6.5",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "raw-loader": "^2.0.0",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-service": "^3.5.0",
