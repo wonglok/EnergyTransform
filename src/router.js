@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 
 Vue.use(Router)
 
@@ -10,16 +9,21 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      component: require('./views/Landing.vue').default
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/proto-energy',
       // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
+      // this generates a separate chunk (proto-energy.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      component: () => import(/* webpackChunkName: "proto-energy" */ './ProtoEnergy/Pipeline/SimulationEngine.vue')
+    },
+    {
+      path: '/gravity-animation',
+      // route level code-splitting
+      // this generates a separate chunk (proto-energy.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "proto-energy" */ './ProtoEnergy/Pipeline/LocalPhysicsEngine.vue')
     }
   ]
 })

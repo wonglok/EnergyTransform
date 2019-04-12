@@ -1,27 +1,18 @@
 <template>
   <div class="full u-layer-base">
+
     <Scene @ready="(v) => { scene = v; init() }" >
       <!-- <Box3></Box3> -->
-      <Object3D v-if="gameReady === 'voicer'" :position="{ x:0, y: 0, z: 0 }">
-        <SimSim :exec="execStack" :renderer="renderer" :scene="scene" :audio="audio" v-if="renderer && scene && audio" />
-      </Object3D>
-      <Object3D v-if="gameReady === 'vertexer'" :position="{ x:0, y: 0, z: 0 }">
+
+      <Object3D :position="{ x:0, y: 0, z: 0 }">
         <GeoVert :exec="execStack" :renderer="renderer" :scene="scene" v-if="renderer && scene" />
       </Object3D>
 
     </Scene>
 
-    <div class="u-layer" ref="mounter" :style="{ visibility: gameReady ? `visible` : 'hidden' }">
+    <div class="u-layer" ref="mounter">
     </div>
 
-    <div class="u-layer" v-if="!gameReady">
-      <div class="u-center u-full">
-        <div class="">
-          <button @click="startGame('vertexer')">Start Vertexer</button>
-          <button @click="startGame('voicer', true)">Start Voicer</button>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -43,8 +34,6 @@ import FreeJS from '../FreeJS'
 import * as THREE from 'three'
 import * as AuAu from '../Simulation/GeoShader/audio/mic.js'
 
-// import * as OIMO from 'oimo'
-
 let getRD = () => {
   return `_${(Math.random() * 1000000).toFixed(0)}`
 }
@@ -56,9 +45,9 @@ export default {
   components: {
     ...FreeJS,
 
-    Box3: require('../Scene/Box3.vue').default,
-    SimSim: require('../Scene/SimSim.vue').default,
-    GeoVert: require('../Scene/GeoVert.vue').default
+    Box3: require('../SceneItem/Box3.vue').default,
+    // SimSim: require('../SceneItem/SimSim.vue').default,
+    GeoVert: require('../SceneItem/GeoVert.vue').default
   },
   data () {
     return {
@@ -93,17 +82,17 @@ export default {
 
   },
   mounted () {
-    this.startGame('vertexer')
+    // this.startGame('vertexer')
   },
   watch: {
   },
   methods: {
-    startGame (gameReady, audio) {
-      audio && this.setupAudio()
-      this.$nextTick(() => {
-        this.gameReady = gameReady
-      })
-    },
+    // startGame (gameReady, audio) {
+    //   audio && this.setupAudio()
+    //   this.$nextTick(() => {
+    //     this.gameReady = gameReady
+    //   })
+    // },
     init () {
       this.setupRenderer()
       this.setupSizer()
@@ -215,6 +204,15 @@ export default {
   }
 }
 </script>
+
+<style>
+@import url(../CSS/util.css);
+html, body{
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+}
+</style>
 
 <style scoped>
 .full {
