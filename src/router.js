@@ -19,6 +19,20 @@ export default new Router({
       component: () => import(/* webpackChunkName: "proto-energy" */ './ProtoEnergy/Pipeline/SimulationEngine.vue')
     },
     {
+      path: '/simple',
+      // route level code-splitting
+      // this generates a separate chunk (proto-energy.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "proto-energy" */ './ProtoEnergy/Pipeline/SimplePipe.vue')
+    },
+    {
+      path: '/audio',
+      // route level code-splitting
+      // this generates a separate chunk (proto-energy.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "proto-energy" */ './ProtoEnergy/Pipeline/Audio.vue')
+    },
+    {
       path: '/gravity-animation',
       // route level code-splitting
       // this generates a separate chunk (proto-energy.[hash].js) for this route

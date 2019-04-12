@@ -9,6 +9,7 @@
     "github": "git add .; git commit -am \"github backup\"; git push -u origin master",
     "deploy": "npm run github;",
     "deploy-old": "npm run github; npm run build; npm run cp; npm run netlify;",
+    "ssl": "local-ssl-proxy --source 9000 --target 8080",
     "netlify": "netlify deploy --dir=\"./dist\" --prod",
     "cp": "cp _redirects ./dist/_redirects"
   },
@@ -22,7 +23,6 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "raw-loader": "^2.0.0",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-service": "^3.5.0",
@@ -30,6 +30,8 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "local-ssl-proxy": "^1.3.0",
+    "raw-loader": "^2.0.0",
     "vue-template-compiler": "^2.5.21"
   }
 }

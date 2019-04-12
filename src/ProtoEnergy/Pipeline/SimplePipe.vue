@@ -2,11 +2,11 @@
   <div class="full u-layer-base">
 
     <Scene @ready="(v) => { scene = v; init() }" >
-      <!-- <Box3></Box3> -->
+      <Box3></Box3>
 
-      <Object3D @element="(v) => { rotator = v }">
+      <!-- <Object3D @element="(v) => { rotator = v }">
         <GeoVert :exec="execStack" :renderer="renderer" :scene="scene" v-if="renderer && scene" />
-      </Object3D>
+      </Object3D> -->
 
     </Scene>
 
@@ -48,7 +48,7 @@ export default {
 
     Box3: require('../SceneItem/Box3.vue').default,
     // SimSim: require('../SceneItem/SimSim.vue').default,
-    GeoVert: require('../SceneItem/GeoVert.vue').default
+    // GeoVert: require('../SceneItem/GeoVert.vue').default
   },
   data () {
     return {
@@ -56,7 +56,6 @@ export default {
       mouse: { x: 0, y: 0, z: 0 },
       rect: false,
       execStack: [],
-      gameReady: false,
       audio: false,
       control: false,
       size: false,

@@ -2,16 +2,24 @@
   <div class="full u-layer-base">
 
     <Scene @ready="(v) => { scene = v; init() }" >
-      <!-- <Box3></Box3> -->
+      <Box3 v-if="audioAPI" :audioAPI="audioAPI"></Box3>
 
-      <Object3D @element="(v) => { rotator = v }">
+      <!-- <Object3D @element="(v) => { rotator = v }">
         <GeoVert :exec="execStack" :renderer="renderer" :scene="scene" v-if="renderer && scene" />
-      </Object3D>
+      </Object3D> -->
 
     </Scene>
 
     <div class="u-layer" ref="mounter">
       <!-- OMG lol -->
+    </div>
+
+    <div class="u-layer white" v-if="!gameReady">
+      <div class="u-center u-full">
+        <div class="">
+          <button @click="startGame()">Start Mic Game</button>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -33,7 +41,7 @@ import 'imports-loader?THREE=three!three/examples/js/controls/OrbitControls.js'
 
 import FreeJS from '../FreeJS'
 import * as THREE from 'three'
-import * as AuAu from '../Simulation/GeoShader/audio/mic.js'
+import * as AudioService from '../InterfaceService/mic-timed.js'
 
 let getRD = () => {
   return `_${(Math.random() * 1000000).toFixed(0)}`
@@ -48,16 +56,16 @@ export default {
 
     Box3: require('../SceneItem/Box3.vue').default,
     // SimSim: require('../SceneItem/SimSim.vue').default,
-    GeoVert: require('../SceneItem/GeoVert.vue').default
+    // GeoVert: require('../SceneItem/GeoVert.vue').default
   },
   data () {
     return {
+      gameReady: false,
       rotator: false,
       mouse: { x: 0, y: 0, z: 0 },
       rect: false,
       execStack: [],
-      gameReady: false,
-      audio: false,
+      audioAPI: false,
       control: false,
       size: false,
       dpi: 2,
@@ -68,7 +76,7 @@ export default {
       readyInit: false,
       world: false,
       Settings: {
-        camPosition: {'x':0,'y':0,'z':-500.28470041153204},
+        camPosition: {x:-6.039906529940434,y:-132.211616042301,z:134.62204543513195},
         bloomPass: {
           threshold: 0.0846740050804403,
           strength: 0.9551227773073666,
@@ -103,6 +111,13 @@ export default {
     //     this.gameReady = gameReady
     //   })
     // },
+    startGame () {
+      this.gameReady = true
+      this.setupAudio()
+      this.execStack.push(() => {
+        this.audioAPI.update()
+      })
+    },
     init () {
       this.setupRenderer()
       this.setupSizer()
@@ -113,7 +128,7 @@ export default {
       this.start()
     },
     setupAudio () {
-      this.audio = AuAu.setup()
+      this.audioAPI = AudioService.setup()
     },
     setupControl () {
       var control = new THREE.OrbitControls(this.camera, this.$refs['mounter'])
@@ -228,5 +243,8 @@ html, body{
 .full {
   width: 100%;
   height: 100%;
+}
+.white{
+  background-color: white;
 }
 </style>
