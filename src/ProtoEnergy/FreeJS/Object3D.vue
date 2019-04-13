@@ -60,7 +60,12 @@ export default {
   mounted () {
     this.scale && this.obj3D.scale.copy(this.scale)
     this.position && this.obj3D.position.copy(this.position)
-    this.rotation && this.obj3D.rotation.copy(this.rotation)
+    // this.rotation && this.obj3D.rotation.copy(this.rotation)
+    if (this.rotation) {
+      this.obj3D.rotation.x = this.rotation.x
+      this.obj3D.rotation.y = this.rotation.y
+      this.obj3D.rotation.z = this.rotation.z
+    }
     this.quaternion && this.obj3D.quaternion.copy(this.quaternion)
 
     this.$emit('element', this.obj3D)

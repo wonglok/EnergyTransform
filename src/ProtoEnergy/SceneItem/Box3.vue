@@ -74,7 +74,9 @@ export default {
       if (this.audioAPI) {
         this.mat.audio.uniforms.audioTexture.value = this.audioAPI.texture
         setInterval(() => {
-          this.mat.audio.uniforms.audioTexture.value = this.audioAPI.texture
+          if (this.audioAPI) {
+            this.mat.audio.uniforms.audioTexture.value = this.audioAPI.texture
+          }
         }, 100)
       }
     }

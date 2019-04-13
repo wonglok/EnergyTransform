@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { BoxBufferGeometry } from 'three'
+import { SphereBufferGeometry } from 'three'
 export default {
   props: {
     size: {
@@ -20,7 +20,7 @@ export default {
     }
   },
   mounted () {
-    let geo = new BoxBufferGeometry(this.size.x, this.size.y, this.size.z, 128.0, 128.0, 128.0)
+    let geo = new SphereBufferGeometry(this.size.x, 512, 512)
     this.geometry = geo
     this.$emit('geometry', geo)
   },
