@@ -30,7 +30,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (proto-energy.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "proto-energy" */ './ProtoEnergy/Pipeline/Audio.vue')
+      component: () => import(/* webpackChunkName: "proto-energy" */ './ProtoEnergy/Pipeline/AudioPipe.vue')
     },
     {
       path: '/gravity-animation',
