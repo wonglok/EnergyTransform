@@ -8,18 +8,13 @@
 
     <div v-if="AuthState.hydrationComplete">
       GAME HOST
-      <div v-if="!AuthState.user">
+      <div v-if="!AuthState.user || AuthState.user.isAnonymous">
         <button @click="loginGoogle">Login Google</button>
-
-
       </div>
-      <div v-if="AuthState.user">
+      <div v-if="AuthState.user && !AuthState.user.isAnonymous">
         <button @click="logout">Logout</button>
-
         <GameList></GameList>
-
       </div>
-
     </div>
   </div>
 </template>

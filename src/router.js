@@ -19,7 +19,17 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (user-client.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "user-client" */ './views/Game/GameSession.vue')
+      component: () => import(/* webpackChunkName: "user-client" */ './views/Game/GameQRLanding.vue')
+    },
+    {
+      path: '/games/:gameID/play',
+      meta: {
+        hide: true
+      },
+      // route level code-splitting
+      // this generates a separate chunk (user-client.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "user-client" */ './views/Game/GamePlay.vue')
     },
     {
       path: '/game-host',

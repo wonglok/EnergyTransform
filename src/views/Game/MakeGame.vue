@@ -42,7 +42,7 @@ export default {
       this.newGame = JSON.parse(JSON.stringify(this.template))
     },
     makeGame () {
-      var newGame = this.newGame
+      var newGame = JSON.parse(JSON.stringify(this.newGame))
       let newGameKey = FDB.ref('games').push().key
       newGame._id = newGameKey
       newGame.date = (new Date()).toString()
