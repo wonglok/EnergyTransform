@@ -19,7 +19,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (user-client.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "user-client" */ './views/Game/GamePad.vue')
+      component: () => import(/* webpackChunkName: "user-client" */ './views/Game/GameSession.vue')
     },
     {
       path: '/game-host',

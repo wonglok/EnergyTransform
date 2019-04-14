@@ -12,7 +12,9 @@
         <div v-if="ga.showQR">
           <qrcode :value="`${baseURL}/games/${ga._id}`" :options="{ width: 200 }"></qrcode>
         </div>
-        <button @click="remove(ga)">Remove Game</button>
+        <div>
+          <router-link :to="`/games/${ga._id}`">Go Game</router-link>
+        </div>
         <button @click="remove(ga)">Remove Game</button>
       </li>
     </ul>
