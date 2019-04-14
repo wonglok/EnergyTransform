@@ -8,6 +8,17 @@ export const State = {
   hydrationComplete: false
 }
 
+export const waitHydration = () => {
+  return new Promise((resolve) => {
+    let tt = setInterval(() => {
+      if (State.hydrationComplete) {
+        clearInterval(tt)
+        resolve()
+      }
+    }, 10)
+  })
+}
+
 Auth.onAuthStateChanged((user) => {
   if (user) {
     // User is signed in.

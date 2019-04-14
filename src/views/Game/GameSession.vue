@@ -1,21 +1,20 @@
 <template>
   <div>
     Phone Contoller
-    <button v-if="!AuthState.user" @click="login">Start Game</button>
     <div v-if="AuthState.user">
-      <button v-if="AuthState.user" @click="logout">Logout</button>
-
+      OMG
     </div>
   </div>
 </template>
 
 <script>
-import { State, logout, loginAnonymous } from '../../auth.js'
+import { State, logout, loginAnonymous, waitHydration } from '../../auth.js'
 import { FDB } from '../../firebase.js'
 
 export default {
   data () {
     return {
+      ready: false,
       AuthState: State
     }
   },
@@ -25,11 +24,19 @@ export default {
     }
   },
   mounted () {
-    this.findGame()
+    waitHydration().then(() => {
+      if (!State.user) {
+        loginAnonymous().then(() => {
+          this.ready = true
+        })
+      } else {
+        this.ready = true
+      }
+    })
   },
   methods: {
     login () {
-      loginAnonymous()
+
     },
     logout () {
       logout()
