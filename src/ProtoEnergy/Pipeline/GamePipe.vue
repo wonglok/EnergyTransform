@@ -2,10 +2,10 @@
   <div class="full u-layer-base">
 
     <Scene @ready="(v) => { scene = v; init() }" >
-      <SphereAnimation v-if="audioAPI" :audioAPI="audioAPI"></SphereAnimation>
-      <!-- <Object3D @element="(v) => { rotator = v }">
+      <!-- <Object3D @element="(v) => { rotator = v }" :scale="{ x: 0.5, y: 0.5, z: 0.5 }">
         <GeoVert :exec="execStack" :renderer="renderer" :scene="scene" v-if="renderer && scene" />
       </Object3D> -->
+      <Space :execStack="execStack" :renderer="renderer" :scene="scene" v-if="renderer && scene"></Space>
     </Scene>
 
     <div class="u-layer" ref="mounter">
@@ -53,8 +53,9 @@ export default {
     ...FreeJS,
 
     SphereAnimation: require('../SceneItem/SphereAnimation.vue').default,
+    Space: require('../SceneItem/Space.vue').default,
     // SimSim: require('../SceneItem/SimSim.vue').default,
-    // GeoVert: require('../SceneItem/GeoVert.vue').default
+    GeoVert: require('../SceneItem/GeoVert.vue').default
   },
   data () {
     return {
@@ -74,7 +75,7 @@ export default {
       readyInit: false,
       world: false,
       Settings: {
-        camPosition: {x: 0,y: 0,z: 150},
+        camPosition: {x: 0,y: 0,z: 30},
         bloomPass: {
           threshold: 0.0846740050804403,
           strength: 0.9551227773073666,
@@ -85,6 +86,7 @@ export default {
   },
   beforeDestroy () {
     this.stop()
+    this.execStack = []
   },
   created () {
 
@@ -112,14 +114,9 @@ export default {
     startGame () {
       this.gameReady = true
       this.setupAudio()
-
-      this.execStack.push(() => {
-        if (this.audioAPI) {
-          this.audioAPI.update()
-        }
-      })
     },
     init () {
+      this.setupScene()
       this.setupRenderer()
       this.setupSizer()
       this.setupCamera()
@@ -127,6 +124,9 @@ export default {
       this.setupControl()
       this.syncSize()
       this.start()
+    },
+    setupScene () {
+      // this.scene.background = new THREE.Color('#ffffff')
     },
     setupAudio () {
       this.audioAPI = AudioService.setup()

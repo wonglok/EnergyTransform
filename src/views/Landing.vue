@@ -12,7 +12,13 @@
 export default {
   data () {
     return {
-      router: this.$router.options.routes.map((r) => {
+      router: this.$router.options.routes.filter((r) => {
+        if (r.meta) {
+          return !r.meta.hide
+        } else {
+          return true
+        }
+      }).map((r) => {
         return {
           path: r.path
         }

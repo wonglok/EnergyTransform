@@ -2,7 +2,8 @@
   <div class="full u-layer-base">
 
     <Scene @ready="(v) => { scene = v; init() }" >
-      <Box3 v-if="audioAPI" :audioAPI="audioAPI"></Box3>
+      <SphereAnimation :execStack="execStack" :audioAPI="audioAPI"></SphereAnimation>
+      <!-- <Box3 v-if="audioAPI" :execStack="execStack" :audioAPI="audioAPI"></Box3> -->
 
       <!-- <Object3D @element="(v) => { rotator = v }">
         <GeoVert :exec="execStack" :renderer="renderer" :scene="scene" v-if="renderer && scene" />
@@ -54,7 +55,9 @@ export default {
   components: {
     ...FreeJS,
 
-    Box3: require('../SceneItem/Box3.vue').default,
+    SphereAnimation: require('../SceneItem/SphereAnimation.vue').default,
+    // Box3: require('../SceneItem/Box3.vue').default,
+
     // SimSim: require('../SceneItem/SimSim.vue').default,
     // GeoVert: require('../SceneItem/GeoVert.vue').default
   },
@@ -76,7 +79,7 @@ export default {
       readyInit: false,
       world: false,
       Settings: {
-        camPosition: {x:-6.039906529940434,y:-132.211616042301,z:134.62204543513195},
+        camPosition: { x:0.0, y:0.0, z:150.0 },
         bloomPass: {
           threshold: 0.0846740050804403,
           strength: 0.9551227773073666,

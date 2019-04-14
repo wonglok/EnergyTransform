@@ -1,24 +1,10 @@
 <template>
   <Object3D>
-    <!-- <Box :color="'#0ff0f0'"></Box> -->
 
-    <BoxBufferGeometry @geometry="(v) => { geo.box = v }"></BoxBufferGeometry>
-    <SphereBufferGeometry @geometry="(v) => { geo.sphere = v }"></SphereBufferGeometry>
-    <!-- <SolidMaterial @material="(v) => { mat.solid = v }"></SolidMaterial> -->
-    <AudioNormalMaterial @material="(v) => { mat.audio = v }"></AudioNormalMaterial>
-
-    <Object3D v-if="geo.sphere && mat.audio">
-      <!-- <Object3D :position="{ x: 0, y: 0, z: 0 }" :scale="{ x: 50, y: 50, z: 50 }">
-        <Mesh :geo="geo.sphere" :mat="mat.audio"></Mesh>
-      </Object3D>
-      <Object3D :position="{ x: 0, y: 50, z: 0 }" :scale="{ x: 50, y: 50, z: 50 }">
-        <Mesh :geo="geo.sphere" :mat="mat.audio"></Mesh>
-      </Object3D> -->
-
-      <Object3D :rotation="{ x: Math.PI * -0.5, y: Math.PI * 0.5, z: 0 }" :position="{ x: 0, y: 0, z: 0 }" :scale="{ x: 50, y: 50, z: 50 }">
-        <Points :geo="geo.sphere" :mat="mat.audio"></Points>
-      </Object3D>
+    <Object3D :position="char.pos" :key="char._id" v-for="char in chars">
+      <Character></Character>
     </Object3D>
+
   </Object3D>
 </template>
 
@@ -32,7 +18,6 @@ import SolidMaterial from '../Material/SolidMaterial.vue'
 import AudioNormalMaterial from '../Material/AudioNormalMaterial.vue'
 import DevMaterial from '../Material/DevMaterial.vue'
 import FreeJS from '../FreeJS'
-import { setInterval } from 'timers';
 
 export default {
   props: {
@@ -48,11 +33,13 @@ export default {
     Points,
     BoxBufferGeometry,
     SphereBufferGeometry,
-    Box
+    Box,
+    Character: require('../Items/Character.vue').default
   },
   data () {
     return {
       Math,
+      chars: [],
       geo: {
         box: false,
         sphere: false
@@ -73,6 +60,7 @@ export default {
     })
   },
   mounted () {
+
     // if (this.mat.audio) {
     //   setInterval(() => {
     //     if (this.mat.audio && this.mat.audio.uniforms.audioTexture) {
