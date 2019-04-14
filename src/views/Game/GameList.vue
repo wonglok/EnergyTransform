@@ -6,9 +6,14 @@
     <MakeGame></MakeGame>
     <ul>
       <li :key="ga._id" v-for="ga in games">
-        <span>{{ ga.status }}</span>
-        <span>{{ timeFromNow(ga.date) }}</span>
-        <button @click="remove(ga)">Remove</button>
+        <div>Game Status: {{ ga.status }}</div>
+        <div>Created: {{ timeFromNow(ga.date) }}</div>
+        <div><button @click="showQR(ga, games)">Show QR Code</button></div>
+        <div v-if="ga.showQR">
+          <qrcode :value="`${baseURL}/games/${ga._id}`" :options="{ width: 200 }"></qrcode>
+        </div>
+        <button @click="remove(ga)">Remove Game</button>
+        <button @click="remove(ga)">Remove Game</button>
       </li>
     </ul>
   </div>
@@ -18,12 +23,17 @@
 import MakeGame from './MakeGame.vue'
 import { FDB, toArr } from '../../firebase.js'
 import moment from 'moment'
+import Vue from 'vue'
+import VueQrcode from '@chenfengyuan/vue-qrcode'
+Vue.use(VueQrcode.name, VueQrcode)
 export default {
   components: {
-    MakeGame
+    MakeGame,
+    qrcode: VueQrcode
   },
   data () {
     return {
+      baseURL: window.location.origin,
       games: [],
       counterReference: false
     }
@@ -41,6 +51,13 @@ export default {
     })
   },
   methods: {
+    showQR (ga, games) {
+      games.forEach(ga => {
+        ga.showQR = false
+      })
+      ga.showQR = true
+      this.$forceUpdate()
+    },
     timeFromNow (dateNum) {
       let date = Date.parse(dateNum)
       return moment(date).fromNow()

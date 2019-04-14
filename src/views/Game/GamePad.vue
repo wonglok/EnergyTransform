@@ -10,6 +10,14 @@ export default {
     gameID () {
       return this.$route.params.gameID
     }
+  },
+  mounted () {
+    this.findGame()
+  },
+  methods: {
+    findGame () {
+
+    }
   }
 }
 </script>

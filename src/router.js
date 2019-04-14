@@ -12,7 +12,7 @@ export default new Router({
       component: require('./views/Landing.vue').default
     },
     {
-      path: '/game/:gameID',
+      path: '/games/:gameID',
       meta: {
         hide: true
       },

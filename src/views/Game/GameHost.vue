@@ -18,7 +18,6 @@
 
         <GameList></GameList>
 
-
       </div>
 
     </div>
