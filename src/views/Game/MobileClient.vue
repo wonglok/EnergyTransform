@@ -9,7 +9,7 @@
           <JoiningPlayers @view="(v) => { v = view }" v-if="clients" :uid="AuthState.user.uid" :gameID="gameID" :clients="clients"></JoiningPlayers>
         </div>
         <div v-if="view === 'full'">
-          <h1>Game is in session.</h1>
+          <h1>Game Room is full.</h1>
         </div>
         <div v-else-if="view === 'game'">
           <h1>Mobile Game</h1>

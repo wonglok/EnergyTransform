@@ -103,11 +103,11 @@ export default {
             let item = val[keyname]
             item._id = keyname
             return item
-          })
+          }).filter(c => !!c).filter(c => c.player)
 
-          if (this.clients.filter(c => c.player).length === this.playerCount) {
+          if (this.clients.filter(c => !!c && c.player).length === this.playerCount) {
             console.log(this.clients)
-            let me = this.clients.find(c => c.uid === State.user.uid && c.player)
+            let me = this.clients.find(c => !!c && c.uid === State.user.uid && c.player)
             if (me) {
               this.$emit('view', 'game')
             } else {
