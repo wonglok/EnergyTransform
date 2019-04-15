@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GameEnsureOkay @view="(v) => { view = v }" @clients="(v) => { clients = v }">
+    <GameEnsureOkay :gameUID="gameUID" @view="(v) => { view = v }" @clients="(v) => { clients = v }">
       <div slot="default">
         <div v-if="view === 'loading'">
           <h1>Loading...</h1>
@@ -51,6 +51,9 @@ export default {
   computed: {
     gameID () {
       return this.$route.params.gameID
+    },
+    gameUID () {
+      return this.$route.params.uid
     }
   },
   mounted () {

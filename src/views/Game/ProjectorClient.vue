@@ -1,12 +1,12 @@
 <template>
   <div class="full">
-    <GameEnsureOkay class="full" @view="(v) => { view = v }" @clients="(v) => { clients = v }">
+    <GameEnsureOkay class="full" :gameUID="gameUID" @view="(v) => { view = v }" @clients="(v) => { clients = v }">
       <div slot="default" class="full">
         <div v-if="view === 'loading'">
           <h1>Loading...</h1>
         </div>
         <div v-if="view === 'lobby'">
-          <WaitingPlayers v-if="clients" :gameID="gameID" :clients="clients"></WaitingPlayers>
+          <WaitingPlayers :gameUID="gameUID" v-if="clients" :gameID="gameID" :clients="clients"></WaitingPlayers>
         </div>
         <div v-else-if="view === 'game'" class="full">
           <ProjectorGameVisual class="full" :uid="AuthState.user.uid" :gameID="gameID" :clients="clients"></ProjectorGameVisual>
@@ -49,6 +49,9 @@ export default {
   computed: {
     gameID () {
       return this.$route.params.gameID
+    },
+    gameUID () {
+      return this.$route.params.uid
     }
   },
   mounted () {

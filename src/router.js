@@ -9,14 +9,14 @@ export default new Router({
   routes: [
     {
       path: '/routes',
-      component: require('./views/Landing.vue').default
+      component: require('./views/Routes.vue').default
     },
     {
       path: '/',
-      component: require('./views/Game/RedirectToGame.vue').default
+      component: require('./views/Game/LandingGame.vue').default
     },
     {
-      path: '/mobile/:gameID',
+      path: '/mobile/:uid/:gameID',
       meta: {
         hide: true
       },
@@ -26,7 +26,7 @@ export default new Router({
       component: () => import(/* webpackChunkName: "user-client" */ './views/Game/MobileClient.vue')
     },
     {
-      path: '/projector/:gameID',
+      path: '/projector/:uid/:gameID',
       meta: {
         hide: true
       },

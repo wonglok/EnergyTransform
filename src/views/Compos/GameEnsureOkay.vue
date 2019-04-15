@@ -19,6 +19,9 @@ export default {
     Slapper,
     qrcode
   },
+  props: {
+    gameUID: {}
+  },
   data () {
     return {
       playerCount: 2,
@@ -83,7 +86,7 @@ export default {
   methods: {
     findGame () {
       return new Promise((resolve, reject) => {
-        FDB.ref(`/games/${this.gameID}`).once('value', (snap) => {
+        FDB.ref(`/user-games/${this.gameUID}/${this.gameID}`).once('value', (snap) => {
           console.log()
           let ans = snap.val()
           if (ans && ans._id) {

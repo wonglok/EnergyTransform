@@ -11,7 +11,19 @@
       <span v-else>Waiting for Player 2</span>
     </div>
 
-    <qrcode :value="`${baseURL}/mobile/${gameID}`" :options="{ width: 400 }"></qrcode>
+    <div v-if="gameID && gameUID && baseURL">
+      <qrcode :value="`${baseURL}/mobile/${gameUID}/${gameID}`" :options="{ width: 400 }"></qrcode>
+      <div>
+        <ol>
+          <li>
+            <router-link :to="`/mobile/${gameUID}/${gameID}`">Mobile</router-link>
+          </li>
+          <li>
+            <router-link :to="`/projector/${gameUID}/${gameID}`">Projector</router-link>
+          </li>
+        </ol>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -24,6 +36,7 @@ export default {
     qrcode
   },
   props: {
+    gameUID: {},
     gameID: {},
     clients: {}
   },
