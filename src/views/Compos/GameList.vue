@@ -1,19 +1,27 @@
 <template>
   <div>
     <div>
-      Game List
+      <h1>
+        Game List
+      </h1>
     </div>
-    <MakeGame></MakeGame>
     <ul>
       <li :key="ga._id" v-for="ga in games">
         <div>Game Status: {{ ga.status }}</div>
         <div>Created: {{ timeFromNow(ga.date) }}</div>
         <div><button @click="showQR(ga, games)">Show QR Code</button></div>
         <div v-if="ga.showQR">
-          <qrcode :value="`${baseURL}/games/${ga._id}`" :options="{ width: 200 }"></qrcode>
+          <qrcode :value="`${baseURL}/mobile/${ga._id}`" :options="{ width: 200 }"></qrcode>
         </div>
         <div>
-          <router-link :to="`/games/${ga._id}`">Go Game</router-link>
+          <ol>
+            <li>
+              <router-link :to="`/mobile/${ga._id}`">Mobile</router-link>
+            </li>
+            <li>
+              <router-link :to="`/projector/${ga._id}`">Projector</router-link>
+            </li>
+          </ol>
         </div>
         <button @click="remove(ga)">Remove Game</button>
       </li>
@@ -22,16 +30,13 @@
 </template>
 
 <script>
-import MakeGame from './MakeGame.vue'
 import { FDB, toArr } from '../../firebase.js'
 import moment from 'moment'
 import Vue from 'vue'
-import VueQrcode from '@chenfengyuan/vue-qrcode'
-Vue.use(VueQrcode.name, VueQrcode)
+import qrcode from '@chenfengyuan/vue-qrcode'
 export default {
   components: {
-    MakeGame,
-    qrcode: VueQrcode
+    qrcode
   },
   data () {
     return {
@@ -49,6 +54,10 @@ export default {
     this.counterReference = FDB.ref('games').orderByChild('ntimestamp');
     this.counterReference.on('value', (snapshot) => {
       this.games = toArr(snapshot.val()).reverse()
+      let latestGame = this.games[0]
+      if (latestGame) {
+        this.showQR(latestGame, this.games)
+      }
       this.$forceUpdate()
     })
   },
@@ -60,12 +69,15 @@ export default {
       ga.showQR = true
       this.$forceUpdate()
     },
-    timeFromNow (dateNum) {
-      let date = Date.parse(dateNum)
-      return moment(date).fromNow()
+    timeFromNow (date) {
+      let dd = Date.parse(date)
+      return moment(dd).fromNow()
     },
     remove (ga) {
-      FDB.ref(`/games/${ga._id}`).remove()
+      if (window.confirm(`remove game? \n This is created ${this.timeFromNow(ga.date)}`)) {
+        FDB.ref(`/games/${ga._id}`).remove()
+        FDB.ref(`/players/${ga._id}/`).remove()
+      }
     }
   }
 }

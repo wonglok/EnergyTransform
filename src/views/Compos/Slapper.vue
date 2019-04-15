@@ -2,8 +2,10 @@
   <div v-if="mode === 'me'" class="press-me" @click="slaper">
     <span v-if="ready">CLICK ME {{ slap }}</span>
   </div>
-  <div v-else>
-    <span>{{ slap }}</span>
+  <div v-else-if="mode === 'dataonly'">
+  </div>
+  <div v-else-if="mode === 'viewonly'">
+    <span v-if="ready">{{ slap }}</span>
   </div>
 </template>
 
@@ -27,7 +29,7 @@ export default {
   },
   methods: {
     slaper () {
-      FDB.ref(`/players/${this.gameID}/${this.uid}/slap`).transaction((currentVal) => {
+      FDB.ref(`/players/${this.gameID}/players/${this.uid}/slap`).transaction((currentVal) => {
         if (!currentVal) {
           return 1
         }
@@ -35,10 +37,11 @@ export default {
       })
     },
     showSlap () {
-      FDB.ref(`/players/${this.gameID}/${this.uid}/slap`).on('value', (snap) => {
+      FDB.ref(`/players/${this.gameID}/players/${this.uid}/slap`).on('value', (snap) => {
         let val = snap.val()
         if (val) {
           this.slap = val
+          this.$emit('slap', val)
         }
         this.ready = true
       })

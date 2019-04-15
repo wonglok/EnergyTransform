@@ -12,39 +12,45 @@ export default new Router({
       component: require('./views/Landing.vue').default
     },
     {
-      path: '/games/:gameID',
+      path: '/mobile/:gameID',
       meta: {
         hide: true
       },
       // route level code-splitting
       // this generates a separate chunk (user-client.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "user-client" */ './views/Game/GameQRLanding.vue')
+      component: () => import(/* webpackChunkName: "user-client" */ './views/Game/MobileClient.vue')
     },
     {
-      path: '/games/:gameID/play',
+      path: '/projector/:gameID',
       meta: {
         hide: true
       },
       // route level code-splitting
       // this generates a separate chunk (user-client.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "user-client" */ './views/Game/GamePlay.vue')
+      component: () => import(/* webpackChunkName: "user-client" */ './views/Game/ProjectorClient.vue')
     },
+    // {
+    //   name: 'mobile-client',
+    //   path: '/mobile-client/:gameID',
+    //   meta: {
+    //     hide: true
+    //   },
+    //   // route level code-splitting
+    //   // this generates a separate chunk (user-client.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "user-client" */ './views/Game/MobileClient.vue')
+    // },
+
     {
-      path: '/game-host',
+      path: '/game-admin',
       // route level code-splitting
       // this generates a separate chunk (host.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "host" */ './views/Game/GameHost.vue')
+      component: () => import(/* webpackChunkName: "host" */ './views/Game/GameAdmin.vue')
     },
-    {
-      path: '/login',
-      // route level code-splitting
-      // this generates a separate chunk (login.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "login" */ './ProtoEnergy/Pipeline/Login.vue')
-    },
+
     {
       path: '/proto-energy',
       // route level code-splitting

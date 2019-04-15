@@ -8,10 +8,14 @@
             <Box :size="oo.size" :color="oo.color"></Box>
           </Object3D>
         </PhysicsItem>
+
+        <GameChar :world="world" :idb="idb" :key="i" :client="c" v-for="(c, i) in clients"></GameChar>
+
       </Object3D>
 
+      <!-- Floor -->
       <PhysicsItem v-if="world" :size="{ x: 300, y: 5, z: 300 }" :move="false" :id="'_floor'" :geo="'box'" :idb="idb" :world="world">
-        <Object3D :position="{ x: 0, y: 0, z: 5 }" :quaternion="{ x: 0.0, y: 0.0, z: 0.2, w: 0.8 }">
+        <Object3D :position="{ x: 0, y: -10, z: 5 }" :quaternion="{ x: 0.0, y: 0.0, z: 0.0, w: 0.0 }">
           <Box :size="{ x: 300, y: -4.5, z: 300 }" :color="`rgb(20,20,20)`"></Box>
         </Object3D>
       </PhysicsItem>
@@ -34,10 +38,12 @@ import 'imports-loader?THREE=three!three/examples/js/postprocessing/UnrealBloomP
 
 import 'imports-loader?THREE=three!three/examples/js/controls/OrbitControls.js'
 
-import FreeJS from '../FreeJS'
 import * as THREE from 'three'
-import Box from '../Items/Box.vue'
 import * as OIMO from 'oimo'
+
+import Box from '../../ProtoEnergy/Items/Box.vue'
+import FreeJS from '../../ProtoEnergy/FreeJS'
+import GameChar from '../Compos/GameChar.vue'
 
 let getRD = () => {
   return `_${(Math.random() * 1000000).toFixed(0)}`
@@ -45,18 +51,28 @@ let getRD = () => {
 
 export default {
   props: {
+
+
     toucher: {},
 
     clients: {},
     uid: {},
-    game: {}
+    gameID: {}
   },
   components: {
     ...FreeJS,
-    Box
+    Box,
+    GameChar
+  },
+  watch: {
+
+  },
+  computed: {
+
   },
   data () {
     return {
+      players: [],
       idb: [],
       boxes: [
       ],
@@ -72,7 +88,7 @@ export default {
         camPos: [
           0,
           140.619363082149615,
-          -300.212497523395
+          300.212497523395
         ],
         bloomPass: {
           threshold: 0.0846740050804403,
@@ -87,12 +103,12 @@ export default {
   },
   created () {
     let buck = []
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < 20; i++) {
       buck.push({
         _id: getRD(),
         geo: 'box',
         move: true,
-        size: { x: 40, y: 4, z: 4 },
+        size: { x: 4, y: 4, z: 4 },
         color: `hsl(${(360 * Math.random()).toFixed(0)}, 100%, 64%)`,
         quaternion: { x: Math.random(), y: Math.random(), z: Math.random(), w: 0.0 },
         position: { x: -50 + 100 * Math.random(), y: -50 + 100 * Math.random() + 200 + 1000 * Math.random(), z: -50 + 100 * Math.random() },
@@ -102,6 +118,8 @@ export default {
   },
   mounted () {
     this.setupPhysics()
+
+    // this.players = this.makePlayers()
   },
   watch: {
   },
@@ -128,6 +146,7 @@ export default {
       this.world.postLoop = () => {
         this.postLoop()
       }
+      this.world.play()
     },
     postLoop () {
       this.idb.forEach((entry) => {
@@ -138,11 +157,14 @@ export default {
         if (!body.sleeping) {
           object.position.copy(body.getPosition())
           object.quaternion.copy(body.getQuaternion())
-
           if (object.position.y < -330) {
             body.resetPosition(defaultPos.x, defaultPos.y, defaultPos.z)
           }
         }
+
+        // if (entry.userData && entry.userData().position) {
+        //   object.position.copy(entry.userData().position)
+        // }
       })
     },
     setupControl () {
@@ -238,7 +260,7 @@ export default {
 </script>
 
 <style>
-@import url(../CSS/util.css);
+@import url(../../ProtoEnergy/CSS/util.css);
 html,body{
   margin: 0px;
   width: 100%;

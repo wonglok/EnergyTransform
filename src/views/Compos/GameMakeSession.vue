@@ -26,18 +26,6 @@ export default {
     this.reset()
   },
   methods: {
-    // getPlayer ({ pid }) {
-    //   return {
-    //     pid,
-    //     position: {
-    //       x: 0,
-    //       y: 0,
-    //       z: 0
-    //     },
-    //     slapCount: 0,
-    //     stones: []
-    //   }
-    // },
     reset () {
       this.newGame = JSON.parse(JSON.stringify(this.template))
     },
@@ -57,19 +45,6 @@ export default {
     }
   }
 }
-/*
-
-var ref = firebase.database().ref('node/clicks');
-ref.transaction(function(currentClicks) {
-  // If node/clicks has never been set, currentRank will be `null`.
-  var newValue = (currentClicks || 0) + 1;
-  if (newValue > 20) {
-    return; // abort the transaction
-  }
-  return newValue;
-});
-
-*/
 </script>
 
 <style>

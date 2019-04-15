@@ -1,4 +1,4 @@
-<template>
+'<template>
   <div>
     <div v-if="!AuthState.hydrationComplete">
       <h1>
@@ -7,12 +7,18 @@
     </div>
 
     <div v-if="AuthState.hydrationComplete">
-      GAME HOST
+      <div>
+        <h1>
+          Game Host
+        </h1>
+      </div>
       <div v-if="!AuthState.user || AuthState.user.isAnonymous">
         <button @click="loginGoogle">Login Google</button>
       </div>
+
       <div v-if="AuthState.user && !AuthState.user.isAnonymous">
         <button @click="logout">Logout</button>
+        <MakeGame></MakeGame>
         <GameList></GameList>
       </div>
     </div>
@@ -21,10 +27,13 @@
 
 <script>
 import { State, loginGoogle, logout } from '../../auth.js'
-import GameList from './GameList.vue'
+import GameList from '../Compos/GameList.vue'
+import MakeGame from '../Compos/GameMakeSession.vue'
+
 export default {
   components: {
-    GameList
+    GameList,
+    MakeGame
   },
   data () {
     return {

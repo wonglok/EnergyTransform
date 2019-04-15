@@ -7,6 +7,9 @@
 <script>
 export default {
   props: {
+    userData: {
+      default: false
+    },
     id: {},
     world: {},
     idb: {},
@@ -14,6 +17,15 @@ export default {
       default: 'sphere'
     },
     move: {
+      default: false
+    },
+    noSleep: {
+      default: false
+    },
+    name: {
+      default: 'default-obj'
+    },
+    kinematic: {
       default: false
     },
     size: {
@@ -58,16 +70,21 @@ export default {
           friction: this.friction || 0.2,
           restitution: this.restitution || 0.2,
           belongsTo: this.belongsTo || 1, // The bits of the collision groups to which the shape belongs.
-          collidesWith: this.collidesWith || 0xffffffff // The bits of the collision groups with which the shape collides.
+          collidesWith: this.collidesWith || 0xffffffff, // The bits of the collision groups with which the shape collides.
+          kinematic: this.kinematic,
+          name: this.name,
+          noSleep: this.noSleep
       })
 
       this.idb.push({
         id: this.id,
         object: object,
         defaultPos: object.position.clone(),
-        body
+        body,
+        userData: this.userData
       })
 
+      this.$emit('body', body)
       this.$parent.$emit('add', object)
     })
     this.$on('remove', (object) => {
