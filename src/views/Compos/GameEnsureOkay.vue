@@ -105,17 +105,13 @@ export default {
           this.clients = playerUIDs.map((keyname) => {
             let item = val[keyname]
             item._id = keyname
+            item.isMe = item.uid === State.user.uid
             return item
           }).filter(c => !!c).filter(c => c.player)
+          console.log(this.clients)
 
-          if (this.clients.filter(c => c.player).length === this.playerCount) {
-            console.log(this.clients)
-            let me = this.clients.find(c => c.uid === State.user.uid && c.player)
-            if (me) {
-              this.$emit('view', 'game')
-            } else {
-              this.$emit('view', 'full')
-            }
+          if (this.clients.length === this.playerCount) {
+            this.$emit('view', 'game')
           } else {
             this.$emit('view', 'lobby')
           }

@@ -11,7 +11,7 @@
         <div v-if="view === 'full'">
           <h1>Game Room is full.</h1>
         </div>
-        <div v-else-if="view === 'game'">
+        <div v-else-if="view === 'game' && clients.some(e => e.isMe)">
           <h1>Mobile Game</h1>
 
           <MobileGamePad :uid="AuthState.user.uid" :gameID="gameID"></MobileGamePad>
