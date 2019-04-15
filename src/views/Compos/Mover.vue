@@ -64,6 +64,8 @@ export default {
       }
     }
 
+
+
     window.addEventListener('mouseup', this.h.onMU)
 
     this.h.mmi = setInterval(() => {
@@ -93,6 +95,25 @@ export default {
     this.clean = () => {
       clearInterval(tt)
     }
+
+    this.$refs['area'].addEventListener('touchstart', (evt) => {
+      evt.preventDefault()
+      this.h.onMD()
+    }, false)
+    this.$refs['area'].addEventListener('touchmove', (evt) => {
+      evt.preventDefault()
+      console.log(evt.touches[0])
+      this.h.onMM({
+        pageX: evt.touches[0].pageX,
+        pageY: evt.touches[0].pageY
+      })
+    }, false)
+    this.$refs['area'].addEventListener('touchend', () => {
+      this.h.onMU()
+    }, false)
+    window.addEventListener('touchend', () => {
+      this.h.onMU()
+    }, false)
   },
   beforeDestroy () {
     this.clean()
@@ -122,7 +143,7 @@ export default {
 
 <style scoped>
 .press-me{
-  /* touch-action: manipulation; */
+  touch-action: manipulation;
   user-select: none;
   width: 320px;
   height: 320px;
