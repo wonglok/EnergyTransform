@@ -77,6 +77,15 @@ export default {
       }
     })
 
+    let closeFn = () => {
+      this.closeGame()
+    }
+
+    window.addEventListener('beforeunload', closeFn, false)
+    this.clean = () => {
+      window.removeEventListener('beforeunload', closeFn)
+    }
+
     this.$emit('view', 'loading')
     this.$on('okay', () => {
       this.findAllPlayers()
@@ -84,6 +93,12 @@ export default {
     })
   },
   methods: {
+    closeGame () {
+      FDB.ref(`/players/${this.gameID}/players/${State.user.uid}`).remove()
+      if (State.user.isAnonymous) {
+        FDB.ref(`/users/${State.user.uid}`).remove()
+      }
+    },
     findGame () {
       return new Promise((resolve, reject) => {
         FDB.ref(`/user-games/${this.gameUID}/${this.gameID}`).once('value', (snap) => {

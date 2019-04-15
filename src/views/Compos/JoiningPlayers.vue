@@ -50,8 +50,8 @@ export default {
     }
   },
   mounted () {
+    this.resetGame()
     this.init()
-
     let closeFn = () => {
       this.closeGame()
     }
@@ -87,8 +87,10 @@ export default {
         FDB.ref(`/users/${State.user.uid}`).remove()
       }
     },
-    leaveGame () {
+    resetGame () {
       FDB.ref(`/players/${this.gameID}/players/${State.user.uid}/player`).remove()
+      FDB.ref(`/players/${this.gameID}/players/${State.user.uid}/position`).remove()
+      FDB.ref(`/players/${this.gameID}/players/${State.user.uid}/slap`).remove()
     },
     joinGame ({ player }) {
       // want to play as player ID
