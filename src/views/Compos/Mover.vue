@@ -122,7 +122,7 @@ export default {
 
 <style scoped>
 .press-me{
-  touch-action: manipulation;
+  /* touch-action: manipulation; */
   user-select: none;
   width: 320px;
   height: 320px;
