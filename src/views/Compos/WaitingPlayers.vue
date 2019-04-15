@@ -11,7 +11,7 @@
       <span v-else>Waiting for Player 2</span>
     </div>
 
-    <qrcode :value="`${baseURL}/games/${gameID}`" :options="{ width: 200 }"></qrcode>
+    <qrcode :value="`${baseURL}/mobile/${gameID}`" :options="{ width: 400 }"></qrcode>
   </div>
 </template>
 

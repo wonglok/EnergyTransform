@@ -8,8 +8,12 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/routes',
       component: require('./views/Landing.vue').default
+    },
+    {
+      path: '/',
+      component: require('./views/Game/RedirectToGame.vue').default
     },
     {
       path: '/mobile/:gameID',

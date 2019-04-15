@@ -41,18 +41,13 @@ export default {
   data () {
     return {
       baseURL: window.location.origin,
-      games: [],
-      counterReference: false
+      games: []
     }
   },
   beforeDestroy () {
-    if (this.counterReference) {
-      this.counterReference.off()
-    }
   },
   mounted () {
-    this.counterReference = FDB.ref('games').orderByChild('ntimestamp');
-    this.counterReference.on('value', (snapshot) => {
+    FDB.ref('games').orderByChild('ntimestamp').on('value', (snapshot) => {
       this.games = toArr(snapshot.val()).reverse()
       let latestGame = this.games[0]
       if (latestGame) {
