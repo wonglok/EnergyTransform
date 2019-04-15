@@ -21,6 +21,12 @@
       </PhysicsItem>
 
     </Scene>
+
+    <div class="reset">
+      <div>
+        <button @click="resetGame">Reset</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -124,6 +130,9 @@ export default {
   watch: {
   },
   methods: {
+    resetGame () {
+      FDB.ref(`/players/${this.gameID}/players`).remove()
+    },
     init () {
       this.setupRenderer()
       this.setupSizer()

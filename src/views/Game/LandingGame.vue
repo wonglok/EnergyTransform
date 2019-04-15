@@ -1,6 +1,9 @@
 <template>
   <div>
     Welcome! Loading...
+    <div  v-if="ready">
+      <button @click="startGame">Start New Game</button>
+    </div>
   </div>
 </template>
 
@@ -34,7 +37,9 @@ export default {
   },
   methods: {
     init () {
-      this.findFirstGame()
+      this.ready = true
+
+      // this.findFirstGame()
     },
     findFirstGame () {
       FDB.ref(`/user-games/${State.user.uid}`).orderByChild('ntimestamp').once('value', (snap) => {
