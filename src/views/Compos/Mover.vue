@@ -54,8 +54,8 @@ export default {
           let cX = evt.pageX - x
           let cY = evt.pageY - y
 
-          this.delta.x = (cX - whalf) / w * 2.0
-          this.delta.y = (cY - hhalf) / h * 2.0
+          this.delta.x = (cX - whalf) / w * 0.2 * 2
+          this.delta.y = (cY - hhalf) / h * 0.2 * 2
           this.inertia = 2
         }
       },
@@ -89,7 +89,7 @@ export default {
         this.sync()
         this.lastPos = JSON.stringify(this.pos)
       }
-    }, 100)
+    }, 100 * 2)
     this.clean = () => {
       clearInterval(tt)
     }

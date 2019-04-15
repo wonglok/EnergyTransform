@@ -15,8 +15,8 @@
 
       <!-- Floor -->
       <PhysicsItem v-if="world" :size="{ x: 300, y: 5, z: 300 }" :move="false" :id="'_floor'" :geo="'box'" :idb="idb" :world="world">
-        <Object3D :position="{ x: 0, y: -10, z: 5 }" :quaternion="{ x: 0.0, y: 0.0, z: 0.0, w: 0.0 }">
-          <Box :size="{ x: 300, y: -4.5, z: 300 }" :color="`rgb(20,20,20)`"></Box>
+        <Object3D :position="{ x: 0, y: 0, z: 5 }" :quaternion="{ x: 0.0, y: 0.0, z: 0.0, w: 0.0 }">
+          <Box :size="{ x: 300, y: -10, z: 300 }" :color="`rgb(20,20,20)`"></Box>
         </Object3D>
       </PhysicsItem>
 
@@ -87,8 +87,8 @@ export default {
       Settings: {
         camPos: [
           0,
-          140.619363082149615,
-          300.212497523395
+          300.619363082149615,
+          0.
         ],
         bloomPass: {
           threshold: 0.0846740050804403,

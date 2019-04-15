@@ -46,7 +46,7 @@ export default {
         _id: c.gameID + c.player,
         geo: 'box',
         move: true,
-        size: { x: 10, y: 10, z: 10 },
+        size: { x: 30, y: 30, z: 30 },
         color: `hsl(${(360 * Math.random()).toFixed(0)}, 100%, 64%)`,
         quaternion: { x: 0.0, y: 0.0, z: 0.0, w: 1.0 },
         position: { x: 0, y: 0, z: 0 },
@@ -67,17 +67,23 @@ export default {
       if (tween) {
         tween.stop()
       }
-      tween = new TWEEN.Tween(this.element.position)
+      let coord = { ...this.body.position }
+      tween = new TWEEN.Tween(coord)
         .to({
           x: self.client.position.x,
-          y: -self.client.position.y,
-          z: self.client.position.z
-        }, 150)
+          z: self.client.position.y,
+          y: self.client.position.z + 2
+        }, 150 * 2)
+        .onUpdate(() => {
+          if (this.body) {
+            this.body.position.copy(coord)
+          }
+        })
         .start()
 
         setTimeout(() => {
           run()
-        }, 100)
+        }, 100 * 2)
     }
 
     run()
