@@ -1,12 +1,6 @@
 <template>
   <div>
-    <div v-if="ready">
-
-      <button v-if="!gameKey" @click="startGame">
-        Start Game
-      </button>
-
-    </div>
+    Welcome! Loading...
   </div>
 </template>
 
@@ -41,7 +35,6 @@ export default {
   methods: {
     init () {
       this.findFirstGame()
-      // this.ready = true
     },
     findFirstGame () {
       FDB.ref(`/user-games/${State.user.uid}`).orderByChild('ntimestamp').once('value', (snap) => {
@@ -50,7 +43,7 @@ export default {
           let games = toArr(val)
           let firstGame = games[0]
           if (firstGame) {
-            FDB.ref(`/players/${firstGame._id}/players/${State.user.uid}/player`).set(1)
+            // FDB.ref(`/players/${firstGame._id}/players/${State.user.uid}/player`).set(1)
             this.$router.push(`/projector/${State.user.uid}/${firstGame._id}`)
           } else {
             this.startGame()
@@ -62,18 +55,18 @@ export default {
     },
     startGame () {
       var newGame = {}
-      let newGameKey = FDB.ref(`/user-games/${State.user.uid}/`).push().key
-      newGame._id = newGameKey
+      let newKey = FDB.ref(`/user-games/${State.user.uid}/`).push().key
+      newGame._id = newKey
       newGame.date = (new Date()).toString()
       newGame.ntimestamp = -(new Date()).getTime()
       newGame.timestamp = (new Date()).getTime()
       newGame.status = 'ready'
 
-      console.log(newGameKey)
-      this.gameKey = newGameKey
-      FDB.ref(`/user-games/${State.user.uid}/${newGameKey}`).set(newGame)
-      FDB.ref(`/players/${newGameKey}/players/${State.user.uid}/player`).set(1)
-      this.$router.push(`/projector/${State.user.uid}/${newGameKey}`)
+      console.log(newKey)
+      this.gameKey = newKey
+      FDB.ref(`/user-games/${State.user.uid}/${newKey}`).set(newGame)
+      // FDB.ref(`/players/${newKey}/players/${State.user.uid}/player`).set(1)
+      this.$router.push(`/projector/${State.user.uid}/${newKey}`)
     }
   }
 }
