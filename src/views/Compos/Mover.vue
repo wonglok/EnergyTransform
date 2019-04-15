@@ -54,8 +54,8 @@ export default {
           let cX = evt.pageX - x
           let cY = evt.pageY - y
 
-          this.delta.x = (cX - whalf) / w * 0.2 * 2
-          this.delta.y = (cY - hhalf) / h * 0.2 * 2
+          this.delta.x = (cX - whalf) / w * 0.1
+          this.delta.y = (cY - hhalf) / h * 0.1
           this.inertia = 2
         }
       },
@@ -66,6 +66,7 @@ export default {
 
 
 
+    window.addEventListener('mousemove', this.h.onMM)
     window.addEventListener('mouseup', this.h.onMU)
 
     this.h.mmi = setInterval(() => {
@@ -101,6 +102,14 @@ export default {
       this.h.onMD()
     }, false)
     this.$refs['area'].addEventListener('touchmove', (evt) => {
+      evt.preventDefault()
+      console.log(evt.touches[0])
+      this.h.onMM({
+        pageX: evt.touches[0].pageX,
+        pageY: evt.touches[0].pageY
+      })
+    }, false)
+    window.document.body.addEventListener('touchmove', (evt) => {
       evt.preventDefault()
       console.log(evt.touches[0])
       this.h.onMM({

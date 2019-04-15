@@ -108,7 +108,7 @@ export default {
         _id: getRD(),
         geo: 'box',
         move: true,
-        size: { x: 4, y: 4, z: 4 },
+        size: { x: 17, y: 17, z: 17 },
         color: `hsl(${(360 * Math.random()).toFixed(0)}, 100%, 64%)`,
         quaternion: { x: Math.random(), y: Math.random(), z: Math.random(), w: 0.0 },
         position: { x: -50 + 100 * Math.random(), y: -50 + 100 * Math.random() + 200 + 1000 * Math.random(), z: -50 + 100 * Math.random() },
@@ -136,10 +136,10 @@ export default {
     setupPhysics () {
       this.world = new OIMO.World({
         timestep: 1 / 60,
-        iterations: 8,
+        iterations: 4,
         broadphase: 2, // 1 brute force, 2 sweep and prune, 3 volume tree
-        worldscale: 8, // scale full world
-        random: true,  // randomize sample
+        worldscale: 9, // scale full world
+        random: false,  // randomize sample
         info: false,   // calculate statistic or not
         gravity: [0,-9.8,0]
       })
