@@ -1,6 +1,9 @@
 <template>
   <div>
-    Welcome! Loading...
+    Welcome!
+    <span v-if="!ready">
+      Loading...
+    </span>
     <div  v-if="ready">
       <button @click="startGame">Start New Game</button>
     </div>
@@ -38,7 +41,6 @@ export default {
   methods: {
     init () {
       this.ready = true
-
       // this.findFirstGame()
     },
     findFirstGame () {

@@ -51,6 +51,8 @@ import Box from '../../ProtoEnergy/Items/Box.vue'
 import FreeJS from '../../ProtoEnergy/FreeJS'
 import GameChar from '../Compos/GameChar.vue'
 
+import { FDB } from '../../firebase.js'
+
 let getRD = () => {
   return `_${(Math.random() * 1000000).toFixed(0)}`
 }
@@ -281,5 +283,10 @@ html,body{
 .full {
   width: 100%;
   height: 100%;
+}
+.reset{
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }
 </style>
