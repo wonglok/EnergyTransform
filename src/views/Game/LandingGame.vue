@@ -12,7 +12,7 @@
 
 <script>
 import { State, waitHydration, loginAnonymous } from '../../auth.js'
-import { FDB } from '../../firebase.js'
+import { FDB, toArr } from '../../firebase.js'
 import qrcode from '@chenfengyuan/vue-qrcode'
 
 export default {
@@ -40,7 +40,25 @@ export default {
   },
   methods: {
     init () {
-      this.ready = true
+      this.findFirstGame()
+      // this.ready = true
+    },
+    findFirstGame () {
+      FDB.ref(`/user-games/${State.user.uid}`).orderByChild('ntimestamp').once('value', (snap) => {
+        let val = snap.val()
+        if (val) {
+          let games = toArr(val)
+          let firstGame = games[0]
+          if (firstGame) {
+            FDB.ref(`/players/${firstGame._id}/players/${State.user.uid}/player`).set(1)
+            this.$router.push(`/projector/${State.user.uid}/${firstGame._id}`)
+          } else {
+            this.startGame()
+          }
+        } else {
+          this.startGame()
+        }
+      })
     },
     startGame () {
       var newGame = {}
@@ -54,6 +72,7 @@ export default {
       console.log(newGameKey)
       this.gameKey = newGameKey
       FDB.ref(`/user-games/${State.user.uid}/${newGameKey}`).set(newGame)
+      FDB.ref(`/players/${newGameKey}/players/${State.user.uid}/player`).set(1)
       this.$router.push(`/projector/${State.user.uid}/${newGameKey}`)
     }
   }
