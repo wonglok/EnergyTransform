@@ -88,9 +88,7 @@ export default {
       }
     },
     resetGame () {
-      FDB.ref(`/players/${this.gameID}/players/${State.user.uid}/player`).remove()
-      FDB.ref(`/players/${this.gameID}/players/${State.user.uid}/position`).remove()
-      FDB.ref(`/players/${this.gameID}/players/${State.user.uid}/slap`).remove()
+      FDB.ref(`/players/${this.gameID}/players/${State.user.uid}`).remove()
     },
     joinGame ({ player }) {
       // want to play as player ID
