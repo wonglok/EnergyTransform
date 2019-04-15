@@ -9,14 +9,14 @@
           </Object3D>
         </PhysicsItem>
 
-        <GameChar :world="world" :idb="idb" :key="i" :client="c" v-for="(c, i) in clients"></GameChar>
+        <GameChar :world="world" :idb="idb" :client="c" :key="i" v-for="(c, i) in clients.filter(e => e.player)"></GameChar>
 
       </Object3D>
 
       <!-- Floor -->
-      <PhysicsItem v-if="world" :size="{ x: 300, y: 5, z: 300 }" :move="false" :id="'_floor'" :geo="'box'" :idb="idb" :world="world">
-        <Object3D :position="{ x: 0, y: 0, z: 5 }" :quaternion="{ x: 0.0, y: 0.0, z: 0.0, w: 0.0 }">
-          <Box :size="{ x: 300, y: -10, z: 300 }" :color="`rgb(20,20,20)`"></Box>
+      <PhysicsItem v-if="world" :size="{ x: 900, y: 5, z: 900 }" :move="false" :id="'_floor'" :geo="'box'" :idb="idb" :world="world">
+        <Object3D :position="{ x: 0, y: 10, z: 0 }" :quaternion="{ x: 0.0, y: 0.0, z: 0.0, w: 0.0 }">
+          <Box :size="{ x: 900, y: 10, z: 900 }" :color="`rgb(20,20,20)`"></Box>
         </Object3D>
       </PhysicsItem>
 
@@ -87,7 +87,7 @@ export default {
       Settings: {
         camPos: [
           0,
-          300.619363082149615,
+          400,
           0.
         ],
         bloomPass: {
@@ -146,7 +146,7 @@ export default {
       this.world.postLoop = () => {
         this.postLoop()
       }
-      this.world.play()
+      // this.world.play()
     },
     postLoop () {
       this.idb.forEach((entry) => {

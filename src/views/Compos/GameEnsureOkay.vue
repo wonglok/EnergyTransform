@@ -33,17 +33,17 @@ export default {
   computed: {
     gameID () {
       return this.$route.params.gameID
-    },
-    numberOfPeopleJoined () {
-      return this.clients.filter(c => c.player).length
-    }
+    }//,
+    // numberOfPeopleJoined () {
+    //   return this.clients.filter(c => c.player).length
+    // }
   },
   watch: {
-    numberOfPeopleJoined () {
-      if (this.numberOfPeopleJoined === this.playerCount) {
-        this.$emit('view', 'game')
-      }
-    },
+    // numberOfPeopleJoined () {
+    //   if (this.numberOfPeopleJoined === this.playerCount) {
+    //     this.$emit('view', 'game')
+    //   }
+    // },
     clients () {
       this.$emit('clients', this.clients)
     }
@@ -105,8 +105,14 @@ export default {
             return item
           })
 
-          if (this.clients.filter(c => c.player).length >= this.playerCount) {
-            this.$emit('view', 'game')
+          if (this.clients.filter(c => c.player).length === this.playerCount) {
+            console.log(this.clients)
+            let me = this.clients.find(c => c.uid === State.user.uid && c.player)
+            if (me) {
+              this.$emit('view', 'game')
+            } else {
+              this.$emit('view', 'full')
+            }
           } else {
             this.$emit('view', 'lobby')
           }
