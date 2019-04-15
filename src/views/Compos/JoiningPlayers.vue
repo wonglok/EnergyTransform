@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <qrcode :value="`${baseURL}/mobile/${gameID}`" :options="{ width: 250 }"></qrcode>
+    <qrcode :value="`${baseURL}/mobile/${uid}/${gameID}`" :options="{ width: 250 }"></qrcode>
   </div>
 </template>
 
