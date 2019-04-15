@@ -18,9 +18,9 @@
           <li>
             <router-link :to="`/mobile/${gameUID}/${gameID}`">Mobile</router-link>
           </li>
-          <li>
+          <!-- <li>
             <router-link :to="`/projector/${gameUID}/${gameID}`">Projector</router-link>
-          </li>
+          </li> -->
         </ol>
       </div>
     </div>
