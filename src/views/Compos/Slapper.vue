@@ -54,8 +54,8 @@ export default {
 .press-me{
   touch-action: manipulation;
   user-select: none;
-  width: 100px;
+  width: 320px;
   height: 100px;
-  background-color: #eee;
+  background-color: rgb(145, 145, 145);
 }
 </style>

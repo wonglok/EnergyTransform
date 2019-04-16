@@ -54,8 +54,8 @@ export default {
           let cX = evt.pageX - x
           let cY = evt.pageY - y
 
-          this.delta.x = (cX - whalf) / w * 0.1
-          this.delta.y = (cY - hhalf) / h * 0.1
+          this.delta.x = (cX - whalf) / w * 0.18
+          this.delta.y = (cY - hhalf) / h * 0.18
           this.inertia = 2
         }
       },

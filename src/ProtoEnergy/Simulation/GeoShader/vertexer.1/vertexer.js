@@ -2,7 +2,7 @@ import * as THREE from 'three'
 // import 'imports-loader?THREE=three!three/examples/js/GPUComputationRenderer.js'
 import GPUComputationRenderer from '../GPGPU.js'
 
-/* eslint-disable */
+/* eslint-enable */
 export const makeAPI = ({ renderer, scene }) => {
   var api = {}
   var WIDTH = 512;

@@ -126,26 +126,6 @@ void toTriangle (inout vec2 rect, inout vec4 pos, float squareVertexID, inout bo
   }
 }
 
-vec2 spiral (vec2 uvv, vec2 reso, float radius, float angle, vec2 center) {
-  // float radius = 10.0;
-  // float angle = 1.8;
-  // vec2 center = vec2(0.0, 0.0);
-
-  vec2 tc = uvv * reso.xy;
-  tc -= center;
-  float dist = length(tc);
-  if (dist < radius) {
-    float percent = (radius - dist) / radius;
-    float theta = percent * percent * angle * 8.0;
-    float s = sin(theta);
-    float c = cos(theta);
-    tc = vec2(dot(tc, vec2(c, -s)), dot(tc, vec2(s, c)));
-  }
-  tc += center;
-  vec2 coord = vec2(tc / reso.xy);
-  return coord;
-}
-
 uniform vec3 mousePos;
 uniform vec3 screen;
 
@@ -201,7 +181,7 @@ void main ()	{
     // pos.xyz += vec3(7.0 * offset);
   } else {
     // ---------
-    float mode = 5.0;
+    float mode = 4.0;
 
     if (mode == 1.0) {
       vec3 mpos = pos.xyz / 350.0 * 3.14159264 * 2.0;
@@ -239,24 +219,6 @@ void main ()	{
       pos.xyz += rand(uv) * 0.8;
 
       pos.xyz = rotateQ(normalize(mpos.zyx), time * 0.65) * pos.xyz;
-    } else if (mode == 5.0) {
-      float scaler = 1.0 / 350.0 * 3.14159264 * 2.0;
-      vec3 mpos = pos.xyz * scaler;
-
-      vec2 reso = vec2(1.0, 1.0);
-      float radius = 20.0;
-      float angle = 12.0;
-      vec2 center = vec2(0.0);
-
-      pos.xy += spiral(sin(tan(mpos.xy)), reso, radius, angle, center);
-
-      // pos.xyz = rotateX(mpos.x) * pos.xyz;
-      // pos.xyz = rotateY(mpos.y) * pos.xyz;
-      // pos.xyz = rotateZ(mpos.z) * pos.xyz;
-
-      // pos.xyz += rand(uv) * 0.8;
-
-      // pos.xyz = rotateQ(normalize(mpos.zyx), time * 0.65) * pos.xyz;
     }
   }
 

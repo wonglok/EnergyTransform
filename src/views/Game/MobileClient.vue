@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <GameEnsureOkay :gameUID="gameUID" @view="(v) => { view = v }" @clients="(v) => { clients = v }">
-      <div slot="default">
-        <div v-if="view === 'loading'">
+  <div class="full">
+    <GameEnsureOkay class="full" :gameUID="gameUID" @view="(v) => { view = v }" @clients="(v) => { clients = v }">
+      <div class="full" slot="default">
+        <div class="fill" v-if="view === 'loading'">
           <h1>Loading...</h1>
         </div>
-        <div v-if="view === 'lobby'">
+        <div class="fill" v-if="view === 'lobby'">
           <JoiningPlayers @view="(v) => { v = view }" v-if="clients" :uid="AuthState.user.uid" :gameID="gameID" :clients="clients"></JoiningPlayers>
         </div>
-        <div v-if="view === 'full'">
+        <div class="fill" v-if="view === 'full'">
           <h1>Game Room is full.</h1>
         </div>
-        <div v-else-if="view === 'game' && clients.some(e => e.isMe)">
-          <h1>Mobile Game</h1>
-
+        <div class="full" v-else-if="view === 'game' && clients.some(e => e.isMe)">
           <MobileGamePad :uid="AuthState.user.uid" :gameID="gameID"></MobileGamePad>
         </div>
-        <div v-else-if="view === 'game' && !clients.some(e => e.isMe)">
-          <h1>Room is full</h1>
+        <div class="full" v-else-if="view === 'game' && !clients.some(e => e.isMe)">
+          <h1>Too late, room is full.</h1>
         </div>
       </div>
       <div slot="e404">
