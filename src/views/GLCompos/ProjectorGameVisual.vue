@@ -178,7 +178,7 @@ export default {
         if (!body.sleeping) {
           object.position.copy(body.getPosition())
           object.quaternion.copy(body.getQuaternion())
-          if (object.position.y < -330) {
+          if (object.position.y < -330 && body.name === 'stones') {
             body.resetPosition(defaultPos.x, defaultPos.y, defaultPos.z)
           }
         }

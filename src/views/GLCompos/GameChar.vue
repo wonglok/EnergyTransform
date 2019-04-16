@@ -72,7 +72,7 @@ export default {
         .to({
           x: self.client.position.x,
           z: self.client.position.y,
-          y: self.client.position.z + 3
+          y: 3
         }, 150 * 2)
         .onUpdate(() => {
           if (this.body) {

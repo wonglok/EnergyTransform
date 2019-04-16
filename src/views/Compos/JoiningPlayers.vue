@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Game Lobby @ Phone</h1>
+    <h1>Join Game @ Phone as a GameController</h1>
 
     <div class="join-game" :class="{ taken: isSlotTaken(1) }">
       <div class="text-center-wrap" v-if="isSlotTaken(1) && alreadyJoinedOne()">

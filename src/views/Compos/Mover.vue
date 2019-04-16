@@ -155,8 +155,8 @@ export default {
 .press-me{
   touch-action: manipulation;
   user-select: none;
-  width: 320px;
-  height: 320px;
+  width: 60vmin;
+  height: 60vmin;
   background-color: #eee;
 }
 </style>
