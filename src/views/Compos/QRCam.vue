@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
+    <div id="loadingMessage">🎥 Please enable webcam to scan QRCode.</div>
     <canvas id="canvas" hidden></canvas>
-    <div id="output" hidden>
+    <!-- <div id="output" hidden>
       <div id="outputMessage">No QR code detected.</div>
       <div hidden><b>Data:</b> <span id="outputData"></span></div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -15,10 +15,12 @@ export default {
   data () {
     return {
       qrlink: '',
-      rAFID: 0
+      rAFID: 0,
+      stop: false
     }
   },
   beforeDestroy () {
+    this.stop = true
     cancelAnimationFrame(this.rAFID)
   },
   watch: {
@@ -58,12 +60,16 @@ export default {
 
     var self = this
     function tick() {
+      if (self.stop) {
+        video.stop();
+        return
+      }
       self.rAFID = requestAnimationFrame(tick);
       loadingMessage.innerText = "⌛ Loading video..."
       if (video.readyState === video.HAVE_ENOUGH_DATA) {
         loadingMessage.hidden = true;
         canvasElement.hidden = false;
-        outputContainer.hidden = false;
+        // outputContainer.hidden = false;
 
         canvasElement.height = video.videoHeight;
         canvasElement.width = video.videoWidth;
@@ -73,18 +79,21 @@ export default {
           inversionAttempts: "dontInvert",
         });
         if (code) {
-          drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
-          drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
-          drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
-          drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
-          outputMessage.hidden = true;
-          outputData.parentElement.hidden = false;
-          outputData.innerText = code.data;
-          self.qrlink = code.data;
-        } else {
-          outputMessage.hidden = false;
-          outputData.parentElement.hidden = true;
+          self.qrlink = code.data
         }
+        // if (code) {
+        //   drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
+        //   drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
+        //   drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
+        //   drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
+        //   outputMessage.hidden = true;
+        //   outputData.parentElement.hidden = false;
+        //   outputData.innerText = code.data;
+        //   self.qrlink = code.data;
+        // } else {
+        //   outputMessage.hidden = false;
+        //   outputData.parentElement.hidden = true;
+        // }
       }
     }
   }
