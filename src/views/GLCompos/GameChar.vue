@@ -51,9 +51,9 @@ export default {
         quaternion: { x: 0.0, y: 0.0, z: 0.0, w: 1.0 },
         position: { x: 0, y: 0, z: 0 },
         move:true,
-        noSleep:true,
+        noSleep:false,
         name:'chars',
-        kinematic:true,
+        kinematic:false,
         userData: c
       }
     }

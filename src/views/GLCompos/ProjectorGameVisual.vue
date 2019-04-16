@@ -3,13 +3,15 @@
     <Scene @ready="(v) => { scene = v; init() }" >
 
       <Object3D v-if="world">
-        <PhysicsItem :size="oo.size" :move="oo.move" :id="oo._id" :geo="oo.geo" :idb="idb" :world="world"  :key="oo._id" v-for="oo in boxes">
+        <!-- <PhysicsItem :size="oo.size" :move="oo.move" :id="oo._id" :geo="oo.geo" :idb="idb" :world="world"  :key="oo._id" v-for="oo in boxes">
           <Object3D :quaternion="oo.quaternion" :position="oo.position">
             <Box :size="oo.size" :color="oo.color"></Box>
           </Object3D>
-        </PhysicsItem>
+        </PhysicsItem> -->
 
-        <GameChar :world="world" :idb="idb" :client="c" :key="i" v-for="(c, i) in clients.filter(e => e.player)"></GameChar>
+        <GameChar :world="world" :idb="idb" :client="c" :key="`clients${c._id}`" v-for="c in clients.filter(e => e.player)"></GameChar>
+
+        <GameStone :world="world" :idb="idb" :stone="s" :key="`stones${s._id}`" v-for="s in stones"></GameStone>
 
       </Object3D>
 
@@ -50,6 +52,7 @@ import * as OIMO from 'oimo'
 import Box from '../../ProtoEnergy/Items/Box.vue'
 import FreeJS from '../../ProtoEnergy/FreeJS'
 import GameChar from '../GLCompos/GameChar.vue'
+import GameStone from '../GLCompos/GameStone.vue'
 
 import { FDB } from '../../firebase.js'
 
@@ -68,7 +71,8 @@ export default {
   components: {
     ...FreeJS,
     Box,
-    GameChar
+    GameChar,
+    GameStone
   },
   watch: {
 
@@ -78,6 +82,7 @@ export default {
   },
   data () {
     return {
+      execStack: {},
       players: [],
       idb: [],
       boxes: [
@@ -117,10 +122,12 @@ export default {
         size: { x: 17, y: 17, z: 17 },
         color: `hsl(${(360 * Math.random()).toFixed(0)}, 100%, 64%)`,
         quaternion: { x: Math.random(), y: Math.random(), z: Math.random(), w: 0.0 },
-        position: { x: -50 + 100 * Math.random(), y: -50 + 100 * Math.random() + 200 + 1000 * Math.random(), z: -50 + 100 * Math.random() },
+        position: { x: -50 + 100 * Math.random(), y: 100 * Math.random() + 200 + 1000 * Math.random(), z: -50 + 100 * Math.random() },
+        name: 'stones'
       })
     }
-    this.boxes = buck
+    // this.boxes = buck
+    this.stones = buck.slice()
   },
   mounted () {
     this.setupPhysics()
@@ -155,13 +162,18 @@ export default {
       this.world.postLoop = () => {
         this.postLoop()
       }
-      // this.world.play()
     },
     postLoop () {
       this.idb.forEach((entry) => {
+        let entryID = entry.id
         let body = entry.body
         let object = entry.object
         let defaultPos = entry.defaultPos
+
+        // if (body.type === 1 && body.name === 'stones' && !body.sleeping) {
+        //   let stone = body
+
+        // }
 
         if (!body.sleeping) {
           object.position.copy(body.getPosition())
@@ -170,10 +182,29 @@ export default {
             body.resetPosition(defaultPos.x, defaultPos.y, defaultPos.z)
           }
         }
+      })
 
-        // if (entry.userData && entry.userData().position) {
-        //   object.position.copy(entry.userData().position)
-        // }
+      // hit the stone to consume the energy.
+      this.idb.filter(et => et.body.name === 'chars').forEach((char) => {
+        this.idb.filter(et => et.body.name === 'stones').forEach((stone) => {
+          let contact = this.world.getContact(char.body, stone.body)
+          if (!stone.body.sleeping) {
+            if (contact && contact.body1.id === char.body.id && contact.body2.id === stone.body.id) {
+              console.log(stone.id)
+
+              let stoneIdx = this.stones.findIndex(s => s._id === stone.id)
+              this.stones.splice(stoneIdx, 1)
+
+              let idbIDX = this.idb.findIndex(s => s.id === stone.id)
+              this.idb.splice(idbIDX, 1)
+
+              this.$emit('hit', {
+                stone,
+                char
+              })
+            }
+          }
+        })
       })
     },
     setupControl () {
