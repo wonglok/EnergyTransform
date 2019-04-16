@@ -35,7 +35,7 @@ export default {
     Slapper,
     GameEnsureOkay,
     WaitingPlayers,
-    ProjectorGameVisual: require('../Compos/ProjectorGameVisual.vue').default
+    ProjectorGameVisual: require('../GLCompos/ProjectorGameVisual.vue').default
   },
   data () {
     return {

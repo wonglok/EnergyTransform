@@ -4,9 +4,15 @@
     <span v-if="!ready">
       Loading...
     </span>
-    <div  v-if="ready">
+    <!-- <div  v-if="ready">
       <button @click="startGame">Start New Game</button>
-    </div>
+    </div> -->
+    <!-- <ul>
+      <li :key="ga._id" v-for="ga in games">
+        <router-link :to="`/projector/${AuthState.user.uid}/${ga._id}`">Eneter</router-link>
+        <button @click="removeGame(AuthState.user.uid, ga._id)">Remove Game</button>
+      </li>
+    </ul> -->
   </div>
 </template>
 
@@ -32,6 +38,7 @@ export default {
   },
   data () {
     return {
+      games: [],
       AuthState: State,
       baseURL: window.location.origin,
       gameKey: false,
@@ -41,27 +48,33 @@ export default {
   methods: {
     init () {
       this.ready = true
-      // this.findFirstGame()
+      // this.reloadGames()
+      this.startGame()
     },
-    findFirstGame () {
-      FDB.ref(`/user-games/${State.user.uid}`).orderByChild('ntimestamp').once('value', (snap) => {
+    removeGame (uid, gameID) {
+
+    },
+    reloadGames () {
+      FDB.ref(`/user-games/${State.user.uid}`).orderByChild('ntimestamp').on('value', (snap) => {
         let val = snap.val()
         if (val) {
           let games = toArr(val)
-          let firstGame = games[0]
-          if (firstGame) {
-            // FDB.ref(`/players/${firstGame._id}/players/${State.user.uid}/player`).set(1)
-            this.$router.push(`/projector/${State.user.uid}/${firstGame._id}`)
-          } else {
-            this.startGame()
-          }
-        } else {
-          this.startGame()
+          this.games = games
+          this.$forceUpdate()
+          // let firstGame = games[0]
+          // if (firstGame) {
+          //   // FDB.ref(`/players/${firstGame._id}/players/${State.user.uid}/player`).set(1)
+          //   this.$router.push(`/projector/${State.user.uid}/${firstGame._id}`)
+          // } else {
+          //   this.startGame()
+          // }
         }
       })
     },
+
     startGame () {
       var newGame = {}
+      FDB.ref(`/user-games/${State.user.uid}`).remove()
       let newKey = FDB.ref(`/user-games/${State.user.uid}/`).push().key
       newGame._id = newKey
       newGame.date = (new Date()).toString()

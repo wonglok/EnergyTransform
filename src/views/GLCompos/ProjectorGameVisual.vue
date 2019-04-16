@@ -49,7 +49,7 @@ import * as OIMO from 'oimo'
 
 import Box from '../../ProtoEnergy/Items/Box.vue'
 import FreeJS from '../../ProtoEnergy/FreeJS'
-import GameChar from '../Compos/GameChar.vue'
+import GameChar from '../GLCompos/GameChar.vue'
 
 import { FDB } from '../../firebase.js'
 
@@ -59,8 +59,6 @@ let getRD = () => {
 
 export default {
   props: {
-
-
     toucher: {},
 
     clients: {},
