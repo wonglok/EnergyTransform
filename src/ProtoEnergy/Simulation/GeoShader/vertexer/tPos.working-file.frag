@@ -146,6 +146,31 @@ vec2 spiral (vec2 uvv, vec2 reso, float radius, float angle, vec2 center) {
   return coord;
 }
 
+vec3 spiral3 (vec3 uvv, vec3 reso, float radius, float angle, vec3 center) {
+  // float radius = 10.0;
+  // float angle = 1.8;
+  // vec3 center = vec3(0.0, 0.0);
+
+  vec3 tc = uvv * reso.xyz;
+  tc -= center;
+  float dist = length(tc);
+  if (dist < radius) {
+    float percent = (radius - dist) / radius;
+    float theta = percent * percent * angle * 8.0;
+    float s = sin(theta);
+    float c = cos(theta);
+    float t = cos(theta);
+    tc = vec3(
+      dot(tc, vec3(c, c, s)),
+      dot(tc, vec3(c, s, c)),
+      dot(tc, vec3(s, c, c))
+    );
+  }
+  tc += center;
+  vec3 coord = vec3(tc / reso.xyz);
+  return coord;
+}
+
 uniform vec3 mousePos;
 uniform vec3 screen;
 
@@ -201,7 +226,7 @@ void main ()	{
     // pos.xyz += vec3(7.0 * offset);
   } else {
     // ---------
-    float mode = 5.0;
+    float mode = 6.0;
 
     if (mode == 1.0) {
       vec3 mpos = pos.xyz / 350.0 * 3.14159264 * 2.0;
@@ -249,14 +274,18 @@ void main ()	{
       vec2 center = vec2(0.0);
 
       pos.xy += spiral(sin(tan(mpos.xy)), reso, radius, angle, center);
+    } else if (mode == 6.0) {
+      float scaler = 1.0 / 350.0 * 3.14159264 * 2.0;
+      vec3 mpos = pos.xyz * scaler;
 
-      // pos.xyz = rotateX(mpos.x) * pos.xyz;
-      // pos.xyz = rotateY(mpos.y) * pos.xyz;
-      // pos.xyz = rotateZ(mpos.z) * pos.xyz;
 
-      // pos.xyz += rand(uv) * 0.8;
+      vec3 reso = vec3(1.0, 1.0, 1.0);
+      float radius = 20.0;
+      float angle = 12.0;
+      vec3 center = vec3(0.0);
 
-      // pos.xyz = rotateQ(normalize(mpos.zyx), time * 0.65) * pos.xyz;
+      pos.xyz = rotateQ(normalize(mpos.xyz * sin(mpos + time)), mod(time * 0.0065, 1.0)) * pos.xyz;
+      pos.xyz = rotateQ(normalize(vec3(1.0)), mod(time * 0.0065, 1.0)) * pos.xyz;
     }
   }
 
