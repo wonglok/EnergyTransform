@@ -27,7 +27,14 @@ export default {
     qrlink () {
       let link = this.qrlink
       let origin = window.location.origin
-      let short = link.replace(origin, '')
+      let short = link
+
+      if (link.indexOf('http://localhost') === 0) {
+        short = link.replace('http://localhost', '')
+      } else {
+        short = link.replace(origin, '')
+      }
+
       cancelAnimationFrame(this.rAFID)
       this.$router.push(short)
     }
