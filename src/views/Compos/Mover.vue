@@ -1,6 +1,7 @@
 <template>
   <div class="press-me" ref="area" @mousedown="h.onMD" @mouseup="h.onMU" @mousemove="h.onMM">
-    {{ pos }}
+    <h1>Move Pad Controller</h1>
+    <pre>{{ pos }}</pre>
   </div>
 </template>
 
