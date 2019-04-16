@@ -1,10 +1,10 @@
 <template>
   <div>
-    Welcome!
-    <span v-if="!ready">
+    <span v-if="!isMobile">
+      Welcome!
       Loading...
     </span>
-    <div v-if="ready && isMobile">
+    <div v-if="isMobile">
       <QRCam></QRCam>
     </div>
   </div>
