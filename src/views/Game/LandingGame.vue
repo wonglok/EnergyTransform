@@ -6,11 +6,20 @@
         Loading...
       </div>
       <div v-if="ready">
-        <button @click="startGame">Start Game</button>
+        <div class="cta-gogo" @click="startGame">
+          <div class="center">
+            Start Game
+          </div>
+        </div>
       </div>
     </span>
     <div v-if="isMobile">
-      <QRCam></QRCam>
+      <div class="cta-gogo" v-if="!openScanner" @click="openScanner =  true">
+        <div class="center">
+          Scan QR Code
+        </div>
+      </div>
+      <QRCam v-if="openScanner"></QRCam>
     </div>
   </div>
 </template>
@@ -56,7 +65,8 @@ export default {
   },
   data () {
     return {
-      isMobile: detectmob(),
+      openScanner: false,
+      isMobile: detectmob() || window.innerWidth < 500,
       games: [],
       AuthState: State,
       baseURL: window.location.origin,
@@ -113,6 +123,18 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.cta-gogo{
+  width: 250px;
+  height: 250px;
+  background-color: #87c997;
+  border: lime solid 1px;
+}
+.center{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
