@@ -23,7 +23,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (user-client.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "user-client" */ './views/Game/MobileClient.vue')
+      component: require('./views/Game/MobileClient.vue').default
     },
     {
       path: '/projector/:uid/:gameID',
@@ -33,7 +33,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (user-client.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "user-client" */ './views/Game/ProjectorClient.vue')
+      component: require('./views/Game/ProjectorClient.vue').default
     },
     // {
     //   name: 'mobile-client',
@@ -46,14 +46,6 @@ export default new Router({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import(/* webpackChunkName: "user-client" */ './views/Game/MobileClient.vue')
     // },
-
-    {
-      path: '/game-admin',
-      // route level code-splitting
-      // this generates a separate chunk (host.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "host" */ './views/Game/GameAdmin.vue')
-    },
 
     {
       path: '/proto-energy',

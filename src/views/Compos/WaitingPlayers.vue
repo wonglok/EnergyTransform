@@ -13,14 +13,13 @@
 
     <div v-if="gameID && gameUID && baseURL">
       <qrcode :value="`${baseURL}/mobile/${gameUID}/${gameID}`" :options="{ width: 400 }"></qrcode>
+
+      <h1>Debug Area</h1>
       <div>
         <ol>
           <li>
             <a target="_blank" :href="`${baseURL}/mobile/${gameUID}/${gameID}`">Game Controller</a>
           </li>
-          <!-- <li>
-            <router-link :to="`/projector/${gameUID}/${gameID}`">Projector</router-link>
-          </li> -->
         </ol>
       </div>
     </div>
