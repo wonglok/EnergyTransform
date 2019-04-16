@@ -16,7 +16,7 @@
       <div>
         <ol>
           <li>
-            <a target="_blank" :href="`${baseURL}/mobile/${gameUID}/${gameID}`">Mobile</a>
+            <a target="_blank" :href="`${baseURL}/mobile/${gameUID}/${gameID}`">Game Controller</a>
           </li>
           <!-- <li>
             <router-link :to="`/projector/${gameUID}/${gameID}`">Projector</router-link>
