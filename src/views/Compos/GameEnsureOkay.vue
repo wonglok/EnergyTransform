@@ -63,6 +63,7 @@ export default {
           this.gameNotFound = true
           this.isOkay = false
           this.$emit('e404')
+          this.$router.push('/')
         })
       } else {
         this.findGame()
@@ -73,6 +74,7 @@ export default {
             this.gameNotFound = true
             this.isOkay = false
             this.$emit('e404')
+            this.$router.push('/')
           })
       }
     })
