@@ -16,6 +16,9 @@
 
           <MobileGamePad :uid="AuthState.user.uid" :gameID="gameID"></MobileGamePad>
         </div>
+        <div v-else-if="view === 'game' && !clients.some(e => e.isMe)">
+          <h1>Room is full</h1>
+        </div>
       </div>
       <div slot="e404">
         Game is not Found.
