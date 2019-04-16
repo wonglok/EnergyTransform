@@ -2,7 +2,12 @@
   <div>
     <span v-if="!isMobile">
       Welcome!
-      Loading...
+      <div v-if="!ready">
+        Loading...
+      </div>
+      <div v-if="ready">
+        <button @click="startGame">Start Game</button>
+      </div>
     </span>
     <div v-if="isMobile">
       <QRCam></QRCam>
@@ -15,6 +20,8 @@ import { State, waitHydration, loginAnonymous } from '../../auth.js'
 import { FDB, toArr } from '../../firebase.js'
 import qrcode from '@chenfengyuan/vue-qrcode'
 import QRCam from '../Compos/QRCam.vue'
+import screenfull from 'screenfull'
+
 function detectmob () {
  if( navigator.userAgent.match(/Android/i)
  || navigator.userAgent.match(/webOS/i)
@@ -61,9 +68,9 @@ export default {
     init () {
       this.ready = true
       // this.reloadGames()
-      if (!this.isMobile) {
-        this.startGame()
-      }
+      // if (!this.isMobile) {
+      //   this.startGame()
+      // }
     },
     reloadGames () {
       FDB.ref(`/user-games/${State.user.uid}`).orderByChild('ntimestamp').on('value', (snap) => {
@@ -84,6 +91,9 @@ export default {
     },
 
     startGame () {
+      if (screenfull.enabled) {
+          screenfull.request();
+      }
       var newGame = {}
       FDB.ref(`/user-games/${State.user.uid}`).remove()
       let newKey = FDB.ref(`/user-games/${State.user.uid}/`).push().key
