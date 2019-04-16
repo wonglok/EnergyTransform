@@ -4,15 +4,9 @@
     <span v-if="!ready">
       Loading...
     </span>
-    <!-- <div  v-if="ready">
-      <button @click="startGame">Start New Game</button>
-    </div> -->
-    <!-- <ul>
-      <li :key="ga._id" v-for="ga in games">
-        <router-link :to="`/projector/${AuthState.user.uid}/${ga._id}`">Eneter</router-link>
-        <button @click="removeGame(AuthState.user.uid, ga._id)">Remove Game</button>
-      </li>
-    </ul> -->
+    <div v-if="ready && isMobile">
+      <QRCam></QRCam>
+    </div>
   </div>
 </template>
 
@@ -20,10 +14,27 @@
 import { State, waitHydration, loginAnonymous } from '../../auth.js'
 import { FDB, toArr } from '../../firebase.js'
 import qrcode from '@chenfengyuan/vue-qrcode'
+import QRCam from '../Compos/QRCam.vue'
+function detectmob () {
+ if( navigator.userAgent.match(/Android/i)
+ || navigator.userAgent.match(/webOS/i)
+ || navigator.userAgent.match(/iPhone/i)
+ || navigator.userAgent.match(/iPad/i)
+ || navigator.userAgent.match(/iPod/i)
+ || navigator.userAgent.match(/BlackBerry/i)
+ || navigator.userAgent.match(/Windows Phone/i)
+ ){
+    return true;
+  }
+ else {
+    return false;
+  }
+}
 
 export default {
   components: {
-    qrcode
+    qrcode,
+    QRCam
   },
   mounted () {
     waitHydration().then(() => {
@@ -38,6 +49,7 @@ export default {
   },
   data () {
     return {
+      isMobile: detectmob(),
       games: [],
       AuthState: State,
       baseURL: window.location.origin,
@@ -49,10 +61,9 @@ export default {
     init () {
       this.ready = true
       // this.reloadGames()
-      this.startGame()
-    },
-    removeGame (uid, gameID) {
-
+      if (!this.isMobile) {
+        this.startGame()
+      }
     },
     reloadGames () {
       FDB.ref(`/user-games/${State.user.uid}`).orderByChild('ntimestamp').on('value', (snap) => {
@@ -85,7 +96,7 @@ export default {
       console.log(newKey)
       this.gameKey = newKey
       FDB.ref(`/user-games/${State.user.uid}/${newKey}`).set(newGame)
-      // FDB.ref(`/players/${newKey}/players/${State.user.uid}/player`).set(1)
+
       this.$router.push(`/projector/${State.user.uid}/${newKey}`)
     }
   }
