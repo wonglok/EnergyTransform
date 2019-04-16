@@ -5,7 +5,8 @@
       <router-link to="/about">About</router-link>
     </div> -->
     <router-view class="full" />
-    <router-link tag="div" to="/routes" style="cursor: pointer; display: block; position: fixed; top: 20px; right: 20px; color: white; text-shadow: 0px 0px 4px black;">Home</router-link>
+    <router-link tag="div" to="/" style="cursor: pointer; display: block; position: fixed; top: 50px; right: 20px; color: white; text-shadow: 0px 0px 4px black;">Home</router-link>
+    <router-link tag="div" to="/routes" style="cursor: pointer; display: block; position: fixed; top: 20px; right: 20px; color: white; text-shadow: 0px 0px 4px black;">Routes</router-link>
   </div>
 </template>
 
