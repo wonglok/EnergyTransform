@@ -13,7 +13,6 @@
 
     <div v-if="gameID && gameUID && baseURL">
       <qrcode :value="`${baseURL}/mobile/${gameUID}/${gameID}`" :options="{ width: 400 }"></qrcode>
-
       <h1>Debug Area</h1>
       <div>
         <ol>

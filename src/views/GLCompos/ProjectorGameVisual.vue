@@ -10,15 +10,14 @@
         </PhysicsItem> -->
 
         <GameChar :world="world" :idb="idb" :client="c" :key="`clients${c._id}`" v-for="c in clients.filter(e => e.player)"></GameChar>
-
         <GameStone :world="world" :idb="idb" :stone="s" :key="`stones${s._id}`" v-for="s in stones"></GameStone>
 
       </Object3D>
 
       <!-- Floor -->
-      <PhysicsItem v-if="world" :size="{ x: 900, y: 5, z: 900 }" :move="false" :id="'_floor'" :geo="'box'" :idb="idb" :world="world">
+      <PhysicsItem v-if="world" :size="{ x: 7000, y: 5, z: 7000 }" :move="false" :id="'_floor'" :geo="'box'" :idb="idb" :world="world">
         <Object3D :position="{ x: 0, y: 10, z: 0 }" :quaternion="{ x: 0.0, y: 0.0, z: 0.0, w: 0.0 }">
-          <Box :size="{ x: 900, y: 10, z: 900 }" :color="`rgb(20,20,20)`"></Box>
+          <Box :size="{ x: 7000, y: 10, z: 7000 }" :color="`rgb(20,20,20)`"></Box>
         </Object3D>
       </PhysicsItem>
 
@@ -26,7 +25,7 @@
 
     <div class="reset">
       <div>
-        <button @click="resetGame">Reset</button>
+        <button @click="removeGame">Reset Game</button>
       </div>
     </div>
   </div>
@@ -137,7 +136,7 @@ export default {
   watch: {
   },
   methods: {
-    resetGame () {
+    removeGame () {
       FDB.ref(`/players/${this.gameID}/players`).remove()
     },
     init () {

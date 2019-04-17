@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import { FDB } from '../../firebase.js'
+import { State } from '../../auth.js'
 export default {
   props: {
     uid: {},
@@ -16,6 +18,9 @@ export default {
   components: {
     Slapper: require('../Compos/Slapper.vue').default,
     Mover: require('../Compos/Mover.vue').default
+  },
+  mounted () {
+    // FDB.ref('/')
   }
 }
 </script>

@@ -53,7 +53,7 @@ export default {
     this.resetGame()
     this.init()
     let closeFn = () => {
-      this.closeGame()
+      // this.closeGame()
     }
 
     window.addEventListener('beforeunload', closeFn, false)

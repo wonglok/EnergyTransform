@@ -80,7 +80,7 @@ export default {
     })
 
     let closeFn = () => {
-      this.closeGame()
+      // this.closeGame()
     }
 
     window.addEventListener('beforeunload', closeFn, false)
@@ -91,10 +91,19 @@ export default {
     this.$emit('view', 'loading')
     this.$on('okay', () => {
       this.findAllPlayers()
+      this.resetToDefaultStat()
       this.$emit('clients', this.clients)
     })
   },
   methods: {
+    resetToDefaultStat () {
+      FDB.ref(`/players/${this.gameID}/players/${State.user.uid}/slap`).set(0)
+      FDB.ref(`/players/${this.gameID}/players/${State.user.uid}/position`).set({
+        x: 0,
+        y: 0,
+        z: 0
+      })
+    },
     closeGame () {
       FDB.ref(`/players/${this.gameID}/players/${State.user.uid}`).remove()
       if (State.user.isAnonymous) {
@@ -121,8 +130,10 @@ export default {
           let playerUIDs = Object.keys(val)
           this.clients = playerUIDs.map((keyname) => {
             let item = val[keyname]
-            item._id = keyname
-            item.isMe = item.uid === State.user.uid
+            if (item) {
+              item._id = keyname
+              item.isMe = item.uid === State.user.uid
+            }
             return item
           }).filter(c => !!c).filter(c => c.player)
           console.log(this.clients)
