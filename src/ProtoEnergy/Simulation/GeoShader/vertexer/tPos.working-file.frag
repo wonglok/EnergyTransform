@@ -226,7 +226,7 @@ void main ()	{
     // pos.xyz += vec3(7.0 * offset);
   } else {
     // ---------
-    float mode = 6.0;
+    float mode = 5.0;
 
     if (mode == 1.0) {
       vec3 mpos = pos.xyz / 350.0 * 3.14159264 * 2.0;
@@ -283,6 +283,22 @@ void main ()	{
       float radius = 20.0;
       float angle = 12.0;
       vec3 center = vec3(0.0);
+
+      // pos.xyz += spiral3(sin(sin(mpos.xyz)), reso, radius, angle, center);
+
+      pos.xyz = rotateQ(normalize(mpos.xyz * sin(mpos + time)), mod(time * 0.0065, 1.0)) * pos.xyz;
+      pos.xyz = rotateQ(normalize(vec3(1.0)), mod(time * 0.0065, 1.0)) * pos.xyz;
+    } else if (mode == 7.0) {
+      float scaler = 1.0 / 350.0 * 3.14159264 * 2.0;
+      vec3 mpos = pos.xyz * scaler;
+
+
+      vec3 reso = vec3(1.0, 1.0, 1.0);
+      float radius = 20.0;
+      float angle = 12.0;
+      vec3 center = vec3(0.0);
+
+      // pos.xyz += spiral3(sin(sin(mpos.xyz)), reso, radius, angle, center);
 
       pos.xyz = rotateQ(normalize(mpos.xyz * sin(mpos + time)), mod(time * 0.0065, 1.0)) * pos.xyz;
       pos.xyz = rotateQ(normalize(vec3(1.0)), mod(time * 0.0065, 1.0)) * pos.xyz;
