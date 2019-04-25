@@ -1,0 +1,138 @@
+{
+  "dbs": {
+    "text": {
+      "dbID": "text",
+      "type": "text",
+      "array": [
+        {
+          "oid": "o_47500240380",
+          "keyname": "my text",
+          "trashed": false,
+          "text": "aaaafc"
+        }
+      ]
+    },
+    "shader": {
+      "dbID": "shader",
+      "type": "shader",
+      "array": [
+        {
+          "oid": "o_64262277071",
+          "keyname": "shader_1",
+          "trashed": false,
+          "glsl": ""
+        }
+      ]
+    },
+    "css": {
+      "dbID": "css",
+      "type": "css",
+      "array": [
+        {
+          "oid": "o_53172799273",
+          "keyname": "HUMAN_INPUT",
+          "trashed": false,
+          "css": "#app {\n  font-size: 17px;\n  font-family: Helvetica;\n  line-height: 1.25;\n  margin: 30px;\n  color: #326FFF;\n}\n\n.mybox{\n  background-color: red;\n  width: 100px;\n  height: 100px;\n}"
+        }
+      ]
+    },
+    "color": {
+      "dbID": "color",
+      "type": "color",
+      "array": [
+        {
+          "oid": "o_48217722874",
+          "keyname": "color_1",
+          "trashed": false,
+          "variation": "pastel",
+          "scheme": "tetrade",
+          "distance": 0.75,
+          "colors": {
+            "hsl": {
+              "h": 222.26086956521752,
+              "s": 1,
+              "l": 0.5160499999999999,
+              "a": 0.89
+            },
+            "hex": "#0851FF",
+            "hex8": "#0851FFE3",
+            "rgba": {
+              "r": 8,
+              "g": 81,
+              "b": 255,
+              "a": 0.89
+            },
+            "hsv": {
+              "h": 222.26086956521752,
+              "s": 0.9679000000000001,
+              "v": 1,
+              "a": 0.89
+            },
+            "oldHue": 222.26086956521752,
+            "source": "hsva",
+            "a": 0.89
+          },
+          "others": [
+            "#4e819c",
+            "#406980",
+            "#cfdde6",
+            "#308dbf",
+            "#e6aa73",
+            "#805f40",
+            "#e6dacf",
+            "#bf7530",
+            "#e6de73",
+            "#807b40",
+            "#e6e4cf",
+            "#bfb630",
+            "#68458a",
+            "#604080",
+            "#dacfe6",
+            "#7830bf"
+          ]
+        }
+      ]
+    },
+    "object": {
+      "dbID": "object",
+      "type": "object",
+      "array": [
+        {
+          "oid": "o_76860006348",
+          "keyname": "object_1",
+          "trashed": false,
+          "position": {
+            "x": -6.63,
+            "y": 1.23,
+            "z": 5.56
+          },
+          "rotation": {
+            "x": -2.096,
+            "y": 0.564,
+            "z": 1.464
+          },
+          "scale": {
+            "x": 1,
+            "y": 1,
+            "z": 1
+          }
+        }
+      ]
+    },
+    "formula": {
+      "dbID": "formula",
+      "type": "formula",
+      "array": [
+        {
+          "oid": "o_8297080321",
+          "keyname": "formula_1",
+          "trashed": false,
+          "position": "12",
+          "fx": "123",
+          "fy": "123",
+          "fz": "4"
+        }
+      ]
+    }
+  }
+}

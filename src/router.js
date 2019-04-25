@@ -12,6 +12,10 @@ export default new Router({
       component: require('./views/Routes.vue').default
     },
     {
+      path: '/experiment',
+      component: require('./views/LayoutExp/Experiment.vue').default
+    },
+    {
       path: '/',
       component: require('./views/Game/LandingGame.vue').default
     },
